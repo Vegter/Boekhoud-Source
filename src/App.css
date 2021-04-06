@@ -1,0 +1,35 @@
+.App {
+  text-align: center;
+}
+
+.text-left-align {
+  text-align: left
+}
+
+.text-right-align {
+  text-align: right
+}
+
+.text-center {
+  text-align: center;
+}
+
+@keyframes App-logo-float {
+  0% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(10px)
+  }
+  100% {
+    transform: translateY(0px)
+  }
+}
+
+@media print
+{
+  .noprint, .noprint *
+  {
+    display: none !important;
+  }
+}

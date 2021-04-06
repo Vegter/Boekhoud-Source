@@ -1,0 +1,57 @@
+table {
+  border-collapse: collapse;
+  text-align: left;
+}
+
+th, td {
+  border-bottom: 1px solid lightgray;
+  padding: 7px;
+  min-height: 28px;
+}
+
+@media screen and (max-width: 40em) {
+  .responsiveTable td.pivoted {
+    padding: 2px;
+  }
+
+  .responsiveTable td {
+    border-bottom: none;
+  }
+
+  .responsiveTable tbody tr {
+    padding-top: 10px !important;
+    padding-bottom: 10px !important;
+
+    border-color: lightgray !important;
+    border-width: 1px !important;
+    border-radius: 15px;
+
+    box-shadow: 2px 2px lightgray;
+
+    margin: 5px
+  }
+
+  .responsiveTable td.noheader {
+    padding-left: 16px !important;
+  }
+
+  .responsiveTable td.noheader .tdBefore {
+    width: 0;
+    display: none;
+  }
+
+  .responsiveTable td .tdBefore {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  tr:nth-child(even) {
+    /*background-color: inherit !important;*/
+  }
+
+}
+
+tr:nth-child(even) {
+  /*background-color: #f2f2f2;*/
+}

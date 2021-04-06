@@ -1,0 +1,96 @@
+{
+  "homepage": "https://vegter.github.io/Boekhoud-Source",
+  "name": "boekhoudsource",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "camt": "^1.0.1",
+    "chart.js": "^2.9.4",
+    "comlink-loader": "^2.0.0",
+    "crypto-js": "^4.0.0",
+    "date-fns": "^2.19.0",
+    "dateformat": "^4.5.1",
+    "decimal.js-light": "^2.5.1",
+    "file-saver": "^2.0.5",
+    "markdown-it": "^12.0.4",
+    "mt940-js": "^1.0.0",
+    "query-string": "^6.14.0",
+    "react": "^17.0.1",
+    "react-chartjs-2": "^2.11.1",
+    "react-dom": "^17.0.1",
+    "react-infinite-scroller": "^1.2.4",
+    "react-redux": "^7.2.0",
+    "react-router-dom": "^5.2.0",
+    "react-scripts": "4.0.1",
+    "react-select": "^3.2.0",
+    "react-super-responsive-table": "^5.2.0",
+    "typescript": "~3.8.2",
+    "xml2js": "^0.4.23"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject",
+    "predeploy": "yarn build",
+    "deploy": "gh-pages -d build"
+  },
+  "eslintConfig": {
+    "extends": "react-app"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "jest": {
+    "collectCoverageFrom": [
+      "**/types/**/*.ts",
+      "**/services/**/*.ts"
+    ],
+    "coverageThreshold": {
+      "global": {
+        "branches": 100,
+        "functions": 100,
+        "lines": 100,
+        "statements": 100
+      }
+    }
+  },
+  "devDependencies": {
+    "@date-io/date-fns": "1.x",
+    "@material-ui/pickers": "^3.3.10",
+    "@material-ui/core": "^4.11.2",
+    "@material-ui/icons": "^4.11.2",
+    "@material-ui/lab": "^4.0.0-alpha.57",
+    "@reduxjs/toolkit": "^1.2.5",
+    "@testing-library/jest-dom": "^4.2.4",
+    "@testing-library/react": "^9.3.2",
+    "@testing-library/user-event": "^7.1.2",
+    "@types/crypto-js": "^4.0.1",
+    "@types/dateformat": "^3.0.1",
+    "@types/file-saver": "^2.0.1",
+    "@types/jest": "^24.0.0",
+    "@types/markdown-it": "^12.0.1",
+    "@types/node": "^12.0.0",
+    "@types/preval.macro": "^3.0.0",
+    "@types/react": "^16.9.0",
+    "@types/react-dom": "^16.9.0",
+    "@types/react-infinite-scroller": "^1.2.1",
+    "@types/react-redux": "^7.1.7",
+    "@types/react-router-dom": "^5.1.6",
+    "@types/react-select": "^3.1.2",
+    "@types/xml2js": "^0.4.7",
+    "gh-pages": "^3.1.0",
+    "jest-fetch-mock": "^3.0.3",
+    "jest-mock-console": "^1.0.1",
+    "preval.macro": "^5.0.0"
+  }
+}
