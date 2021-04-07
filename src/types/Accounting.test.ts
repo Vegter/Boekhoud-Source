@@ -123,7 +123,7 @@ test("setPeriod", () => {
     // Set the allocation to the corresponding accrual account
     allocation = accounting.allocations.getAllocation(mocked.ledgerAllocationData.id)
     expect(allocation.period).toEqual(period)
-    expect(allocation.ledgerAccountCode).toEqual(LEDGER_ACCOUNT.ACCRUED_EXPENSE)
+    expect(allocation.ledgerAccountCode).toEqual(LEDGER_ACCOUNT.ACCRUED_REVENUE)
 
     // Generate a new allocation for the new period with the original ledger accountCode
     splitAllocation = accounting.allocations.getAllocation(allocation.getSplitId(anyPeriod))

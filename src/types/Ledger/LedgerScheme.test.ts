@@ -93,6 +93,6 @@ test("LedgerScheme", async () => {
     restoreConsole()
 
     let mocked = new Mocked()
-    expect(LedgerScheme.getAccrualsAccount(mocked.getAmount(10)).code).toEqual(LEDGER_ACCOUNT.ACCRUED_EXPENSE)
-    expect(LedgerScheme.getAccrualsAccount(mocked.getAmount(-10)).code).toEqual(LEDGER_ACCOUNT.ACCRUED_REVENUE)
+    expect(LedgerScheme.getAccrualsAccount(mocked.getAmount(-10)).code).toEqual(LEDGER_ACCOUNT.ACCRUED_EXPENSE)
+    expect(LedgerScheme.getAccrualsAccount(mocked.getAmount(10)).code).toEqual(LEDGER_ACCOUNT.ACCRUED_REVENUE)
 })
