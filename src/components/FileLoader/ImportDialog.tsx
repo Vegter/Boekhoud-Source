@@ -43,7 +43,7 @@ export default function ImportDialog(props: ImportDialogProps) {
                         <br/>
                         U dient het wachtwoord (of wachtzin) in te geven waarmee het bestand is versleuteld
                     </DialogContentText>
-                    <form noValidate autoComplete="off">
+                    <form noValidate autoComplete="off" onSubmit={handleClose}>
                     <TextField
                         value={password}
                         onChange={onPassword}
