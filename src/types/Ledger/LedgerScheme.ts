@@ -190,7 +190,7 @@ export abstract class LedgerScheme {
      * Based upon the amount (positive or negative) a revenue or expense accruals account is returned
      */
     public static getAccrualsAccount(amount: Amount): LedgerAccount {
-        if (amount.creditDebit === CreditDebit.Debit) {
+        if (amount.creditDebit === CreditDebit.Credit) {
             return this.getAccount(LEDGER_ACCOUNT.ACCRUED_REVENUE)
         } else {
             return this.getAccount(LEDGER_ACCOUNT.ACCRUED_EXPENSE)
