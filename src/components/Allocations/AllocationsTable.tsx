@@ -34,6 +34,10 @@ function AllocationsTable(props: AllocationsTableProps) {
     const noData = !isLoading && rows.length === 0
 
     function updateLedgerAccount(ledgerAllocation: LedgerAllocation, ledgerAccount: LedgerAccount) {
+        if (ledgerAllocation.journalEntry.allocatedLeg.ledgerAccountCode === ledgerAccount.code) {
+            // No change, no further actions
+            return
+        }
         const similarAllocations = allocations.getSimilarAllocations(ledgerAllocation)
 
         if (similarAllocations.length > 1) {
