@@ -82,8 +82,14 @@ export abstract class LedgerScheme {
      * Fetch the RGS data from an API or a local JSON file
      */
     private static async fetchData(useLocalJSON: boolean): Promise<LedgerAccountData[]> {
+        const rgsMKB = await fetch("https://www.boekhoudplaza.nl/cmm/rgs/decimaal_rekeningschema_rgs.php?kznivo34=2&kzBedrijf=ZZP&brancheid=0&rgsvarzoek=&verfijn=Maak+selectie")
+        const txt = await rgsMKB.text()
+        const matches = txt.matchAll(/>([BW]([A-Z][a-z]{0,2}){0,3})</g)
+        const subset = [...matches].map(el => el[1])
         if (useLocalJSON && json) {
-            return json as LedgerAccountData[]
+            let result = json as LedgerAccountData[]
+            result = result.filter(el => el.Nivo === 1 || ["BSchSalNet", "BVorOvaNov", "WBedAdlBan", "WBedAeaAea", "BSchBepLhe", "WFbeRlmObr"].includes(el.Referentiecode) ||  subset.includes(el.Referentiecode))
+            return result
         } else {
             const data = await fetch(this.URL)
             return await data.json() as LedgerAccountData[]
@@ -201,7 +207,7 @@ export abstract class LedgerScheme {
      * Get the LedgerAccount who's code is equal to the given code
      */
     public static getAccount(code: string): LedgerAccount {
-        assert(code in this.ledgerAccountMap)
+        assert(code in this.ledgerAccountMap, `Code ${code} not found`)
         return this.ledgerAccountMap[code]
     }
 
