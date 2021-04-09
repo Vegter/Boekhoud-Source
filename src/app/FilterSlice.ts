@@ -39,6 +39,7 @@ export const FilterSlice = createSlice({
         },
 
         setVATPeriod: (state, action: PayloadAction<{ vatPeriodData: VATPeriodData | null }>) => {
+            vatPeriod.invalidate()
             const { vatPeriodData } = action.payload
 
             state.vatPeriodData = vatPeriodData
