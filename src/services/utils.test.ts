@@ -40,6 +40,14 @@ test("sortedArray", () => {
         array1[0],
         array1[2],
         array1[1]])
+    expect(sortedArray([...array1], (i => i.key), true)).toEqual([
+        array1[0],
+        array1[2],
+        array1[1]])
+    expect(sortedArray([...array1], (i => i.key), false)).toEqual([
+        array1[1],
+        array1[2],
+        array1[0]])
 
     const array2 = [
         { key: 100, a1: "11", a2: 11},

@@ -19,6 +19,7 @@ test("DateString", () => {
     })
 
     expect(dateString.id).toEqual(someDate)
+    expect(dateString.sortKey).toEqual(dateString.Date.toISOString())
 
     const date = new Date()
     expect(DateString.fromDate(date)).toBeDefined()
