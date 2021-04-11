@@ -5,6 +5,7 @@ import { Environment, EnvironmentData } from "../../types/Environment"
 import { BankAccount } from "../../types/LiquidAssets/BankAccount"
 import { BankAccountChartData } from "../Charts/BankAccountChart"
 import { getBankAccountData } from "../Charts"
+import { sortedArray } from "../../services/utils"
 
 export function getBankAccountChartData(
     environment: EnvironmentData,
@@ -39,5 +40,7 @@ export function getAllocationRows(environment: EnvironmentData,
         showRows.push(allocation)
         allocation.children.forEach(child => showRows.push(child))
     }
-    return showRows
+
+    // Return allocations as a sorted list, most recent on top
+    return sortedArray(showRows, a => a.journalEntry.date.sortKey, false)
 }

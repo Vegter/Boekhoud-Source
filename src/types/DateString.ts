@@ -30,6 +30,15 @@ export class DateString {
     }
 
     /**
+     * Returns a key that can be used to sort on DateString value
+     *
+     * Older DateStrings have a lower sortKey that newer DateStrings
+     */
+    get sortKey(): string {
+        return this.Date.toISOString()
+    }
+
+    /**
      * Constructs a new DateString from a Date object
      */
     static fromDate(date: Date): DateString {

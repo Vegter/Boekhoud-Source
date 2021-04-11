@@ -36,11 +36,12 @@ export const capitalize = (s: string) =>
 /**
  * Sort an array on any attribute
  */
-export function sortedArray<T>(array: T[], getKey: (item: T) => string) {
+export function sortedArray<T>(array: T[], getKey: (item: T) => string, ascending: boolean = true) {
+    const [lt, gt] = ascending ? [-1, 1] : [1, -1]
     array.sort((v1, v2) => {
         const s1 = getKey(v1)
         const s2 = getKey(v2)
-        return s1 < s2 ? -1 : s1 > s2 ? 1 : 0
+        return s1 < s2 ? lt : s1 > s2 ? gt : 0
     })
     return array
 }
