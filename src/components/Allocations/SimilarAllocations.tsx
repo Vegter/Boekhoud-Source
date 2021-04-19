@@ -50,7 +50,7 @@ export default function SimilarAllocations(props: Props) {
 
     const { similar, onSimilar } = props
 
-    const { allocations , account } = similar
+    const { allocation, allocations , account } = similar
 
     const [ checked, setChecked ] = React.useState<AllocationSelector>(
         allocations.reduce((result, allocation) => {
@@ -87,6 +87,7 @@ export default function SimilarAllocations(props: Props) {
                 </div>
                 <div>
                     <AllocationsView allocations={allocations}
+                                     allocation={allocation}
                                      checked={checked}
                                      onChecked={onChecked} />
                 </div>

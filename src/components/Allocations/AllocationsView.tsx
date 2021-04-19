@@ -37,6 +37,7 @@ export type AllocationSelector = Record<string, boolean>
 
 interface Props {
     allocations: LedgerAllocation[]
+    allocation: LedgerAllocation
     checked?: AllocationSelector
     onChecked?: (checked: AllocationSelector) => void
 }
@@ -47,11 +48,14 @@ function AllocationsView(props: Props) {
     const onXs = useMediaQuery(theme.breakpoints.only('xs'));
 
     const { allocations, checked, onChecked } = props
+    const mainAllocation = props.allocation
 
     const onSelectAll = (event: React.ChangeEvent<HTMLInputElement>) => {
         if (checked) {
             const isChecked = event.target.checked
-            allocations.forEach(allocation => checked[allocation.id] = isChecked)
+            allocations
+                .filter(a => a.id !== mainAllocation.id)
+                .forEach(allocation => checked[allocation.id] = isChecked)
             onChecked && onChecked(checked)
         }
     }
@@ -87,12 +91,15 @@ function AllocationsView(props: Props) {
                     {allocations.map(allocation => {
                         const amount = allocation.amount
                         const amountClassName = amount.value < 0 ? classes.negativeAmount : classes.positiveAmount
+                        const isMainAllocation = allocation.id === mainAllocation.id
+                        const style = isMainAllocation ? { fontWeight: "bold" } : {}
                         return (
-                            <Tr key={allocation.id}>
+                            <Tr key={allocation.id} style={style}>
                                 {checked && onChecked && <Td className={"noheader"}>
                                     <Checkbox
                                         className={classes.checkBox}
                                         checked={checked[allocation.id]}
+                                        disabled={isMainAllocation}
                                         color={"primary"}
                                         name={allocation.id}
                                         onChange={onSelect}
