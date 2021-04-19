@@ -4,6 +4,8 @@ Boekhoud Source is een Open Source Boekhoudprogramma
 
 De belangrijkste uitgangspunten van Boekhoud Source zijn:
 
+![Secure](./assets/lock.jpg "Secure")
+
 - Privacy by design
   - **_Baas over eigen data_**
 - Beveiligde opslag op een door u zelf te bepalen lokatie
@@ -12,6 +14,8 @@ De belangrijkste uitgangspunten van Boekhoud Source zijn:
   - Automatisch toewijzen van overeenkomstige mutaties, boeken van transitorische posten, ...
 
 Boekhoud Source is een Progessive Web App:
+
+![PWA](./assets/pwa.png "Progressive Web App")
     
 - werkt op desktop, tablet of smartphone
 - Browser of WebApp (Add 2 Home Screen: A2HS)
@@ -21,6 +25,9 @@ Boekhoud Source is een Progessive Web App:
 - Gebruik van WebWorkers voor intensieve rekentaken
 
 ## Werking
+
+![Figures](./assets/calc.jpg "Calculations")
+
 De boekhouding van een bedrijf met geen of zeer beperkte activiteiten komt in de basis neer op het verantwoorden van de **bankmutaties**,
 om deze vervolgens te kunnen verwerken in een **winst- en verliesrekening** en **proef- en saldibalans**.
 
@@ -33,6 +40,9 @@ In Boekhoud Source kan een MT940 of CAMT.053 mutatiebestand worden ingelezen.
 De ingelezen bankmutaties kunnen vervolgens worden toegewezen aan een grootboekrekening.
 
 ### RGS
+
+![RGS](./assets/RGS.jpg "Referentie GrootboekSchema")
+
 Bij het toewijzen van transacties aan grootboekrekeningen wordt gebruik gemaakt van het **Referentie GrootboekSchema** (RGS).
 Resultaten zijn daardoor maximaal uitwisselbaar met andere partijen.
 
