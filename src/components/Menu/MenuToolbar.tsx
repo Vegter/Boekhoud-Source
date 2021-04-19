@@ -69,9 +69,7 @@ export default function MenuToolbar(props: MenuToolbarProps) {
                 <img src={logo} className={classes.logo} alt={"Applicatie Logo"}/>
                 {title}
             </Typography>
-            {showMenus && <div>
-                <MenuDropdown />
-            </div>}
+            {showMenus && <MenuDropdown />}
         </Toolbar>
     );
 }

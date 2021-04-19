@@ -2,13 +2,13 @@ import React, { useState } from 'react'
 import { createStyles, makeStyles } from '@material-ui/core/styles'
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
-import { IconButton } from "@material-ui/core"
+import { Badge, IconButton } from "@material-ui/core"
 import MoreVertIcon from "@material-ui/icons/MoreVert"
 import { resetState, saveStateToFile } from "../../services/stateIO"
 import { Routes } from "../../routes/routes"
 import SaveIcon from "@material-ui/icons/Save"
 import DeleteIcon from "@material-ui/icons/Delete"
-import { useDispatch } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
 import { store } from "../../app/store"
 import { useHistory } from "react-router-dom"
 import { InfoOutlined, Print } from "@material-ui/icons"
@@ -17,6 +17,7 @@ import { setMetaData } from 'app/AccountingSlice';
 import AboutDialog from "./AboutDialog"
 import Divider from "@material-ui/core/Divider"
 import { StyledMenu, StyledMenuItem } from "../Utils/StyledMenu"
+import { selectAge, resetAge } from "../../app/AgeSlice"
 
 const useStyles = makeStyles((theme) =>
     createStyles({
@@ -34,6 +35,7 @@ export default function MenuDropdown() {
     const classes = useStyles()
     const dispatch = useDispatch()
     const history = useHistory()
+    const age = useSelector(selectAge)
 
     const handleClick = (event: React.MouseEvent<HTMLElement>) => {
         setAnchorEl(event.currentTarget)
@@ -52,7 +54,9 @@ export default function MenuDropdown() {
         setSaveDialog(false)
         if (name) {
             dispatch(setMetaData({ name }))
-            saveStateToFile(store.getState(), `${name}.json`, password)
+            if (saveStateToFile(store.getState(), `${name}.json`, password)) {
+                dispatch(resetAge())
+            }
         }
     }
 
@@ -89,7 +93,9 @@ export default function MenuDropdown() {
                 onClick={handleClick}
                 className={classes.menuButton}
             >
-                <MoreVertIcon />
+                <Badge badgeContent={age} color={"secondary"}>
+                    <MoreVertIcon />
+                </Badge>
             </IconButton>
 
             <StyledMenu
@@ -103,14 +109,14 @@ export default function MenuDropdown() {
                     <ListItemIcon>
                         <SaveIcon fontSize="small" />
                     </ListItemIcon>
-                    <ListItemText primary="Bewaar data..." />
+                    <ListItemText primary={`Bewaar updates (${age}) en data...`} />
                 </StyledMenuItem>
 
                 <StyledMenuItem onClick={onDelete}>
                     <ListItemIcon>
                         <DeleteIcon fontSize="small" />
                     </ListItemIcon>
-                    <ListItemText primary="Verwijder data" />
+                    <ListItemText primary={`Verwijder updates (${age}) en data`}/>
                 </StyledMenuItem>
 
                 <Divider/>

@@ -46,7 +46,7 @@ test("State To/From Storage", () => {
     // @ts-ignore
     let mockStorage: Storage = {
         setItem: jest.fn(),
-        getItem: () => '{"accounting": 1, "filter": 2, "any": 3}'
+        getItem: () => '{"accounting": 1, "filter": 2, "age": 42, "any": 3}'
     }
 
     saveStateToStorage({} as RootState, mockStorage)
@@ -57,9 +57,10 @@ test("State To/From Storage", () => {
 
     restoreStateFromStorage(mockStorage, mockDispatch)
 
-    expect(mockDispatch).toHaveBeenCalledTimes(2)
+    expect(mockDispatch).toHaveBeenCalledTimes(3)
     expect(mockDispatch).toHaveBeenCalledWith({"payload": {"state": 1}, "type": "accounting/restoreAccountingState"})
     expect(mockDispatch).toHaveBeenCalledWith({"payload": {"state": 2}, "type": "filter/restoreFilterState"})
+    expect(mockDispatch).toHaveBeenCalledWith({"payload": {"state": 42}, "type": "age/restoreAgeState"})
 
     jest.clearAllMocks()
     resetState(mockDispatch)
