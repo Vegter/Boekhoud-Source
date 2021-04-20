@@ -42,8 +42,8 @@ test("LedgerAllocationMap Basic methods", () => {
     let sorted = map.sorted()
     expect(Object.keys(sorted.data)).toEqual([alloc.id, child.id])
     expect(map.getLedgerAccounts().map(a => a.code)).toEqual([
-        child.parent?.journalEntry.allocatedLeg.ledgerAccountCode,
         child.journalEntry.allocatedLeg.ledgerAccountCode,
+        child.parent?.journalEntry.allocatedLeg.ledgerAccountCode,
     ])
     expect(map.getPeriods().map(p => p.string)).toEqual([
         child.parent?.period.string,
@@ -122,6 +122,6 @@ test("LedgerAllocationMap Allocations", () => {
     alloc.ledgerAccount = mocked.ledgerAccountC
     child.ledgerAccount = mocked.ledgerAccountC
 
-    expect(map.getSimilarAllocations(alloc).map(a => a.id)).toEqual([alloc.id, child.id])
+    expect(map.getSimilarAllocations(alloc).map(a => a.id)).toEqual([child.id, alloc.id])
     expect(map.getSimilarAllocations(child)).toEqual([])
 })
