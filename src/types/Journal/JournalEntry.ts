@@ -177,10 +177,10 @@ export class JournalEntry {
     /**
      * Set VAT, ie add VAT lines and a VAT specification to this journalEntry
      */
-    setVAT(vatSpecificationData: VATSpecificationData) {
-        this.data.entryLegsData.splice(2)
-        const { lines } = vatSpecificationData
-        if (lines.length > 0) {
+    setVAT(vatSpecificationData: VATSpecificationData | null) {
+        this.data.entryLegsData.splice(2)   // Remove any existing VAT legs
+        const lines = vatSpecificationData?.lines ?? []
+        if (vatSpecificationData && lines.length > 0) {
             this.data.vatSpecificationData = vatSpecificationData
             const netto = VATLine.addVATLines(lines).netto
             const currency = this.allocatedLeg.amount.currency

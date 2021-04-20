@@ -226,7 +226,11 @@ export class LedgerAllocation {
         })
     }
 
-    setVAT(vatSpecificationData: VATSpecificationData) {
+    getVAT(): VATSpecificationData | null {
+        return this.journalEntry.getVAT()
+    }
+
+    setVAT(vatSpecificationData: VATSpecificationData | null) {
         this.journalEntry.setVAT(vatSpecificationData)
     }
 
@@ -259,6 +263,13 @@ export class LedgerAllocation {
             if (period.equals(parent.period)) {
                 // unsplit this child
                 this.unsplitAllocation()
+
+                if (this.getVAT()) {
+                    // Set VAT back to the parent
+                    parent.setVAT(this.getVAT())
+                    this.setVAT(null)
+                }
+
                 parent.ledgerAccount = this.ledgerAccount
                 allocations.removeChild(this)
             } else {
@@ -272,6 +283,13 @@ export class LedgerAllocation {
                 // split
                 const child = this.splitAllocation(period)
                 allocations.addChild(this, child, period)
+
+                if (this.getVAT()) {
+                    // Transfer VAT to the child
+                    child.setVAT(this.getVAT())
+                    this.setVAT(null)
+                }
+
                 child.ledgerAccount = this.ledgerAccount
                 this.ledgerAccount = LedgerScheme.getAccrualsAccount(this.amount)
             }

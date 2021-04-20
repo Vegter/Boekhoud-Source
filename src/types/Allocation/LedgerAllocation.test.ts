@@ -115,6 +115,39 @@ test("Split Allocation", () => {
     expect(alloc.journalEntry.allocatedLeg.ledgerAccountCode).toEqual(allocatedCode)
     // Child should be removed from the collection
     expect(accounting.allocations.getAllocation(child.id).data).toBeUndefined()
+})
 
+test("Split Allocation", () => {
+    let mocked = new Mocked()
+    mocked.ledgerScheme()
+    Accounting.State = mocked.state
 
+    let data = mocked.ledgerAllocationData
+    let alloc = new LedgerAllocation(data)
+
+    let vatData = {
+        date: "2010-12-31",
+        lines: [{
+            id: "any id",
+            bruto: "0",
+            vat: "0",
+            netto: "0"
+        }]
+    }
+    alloc.setVAT(vatData)
+    expect(alloc.getVAT()).toEqual(vatData)
+    expect(alloc.children.length).toEqual(0)
+
+    // Split
+    alloc.period = new Period("Split VAT period")
+    expect(alloc.children.length).toEqual(1)
+    let child = alloc.children[0]
+    expect(child.parentRef).toEqual(alloc.id)
+
+    expect(child.getVAT()).toEqual(vatData)
+    expect(alloc.getVAT()).toEqual(null)
+
+    child.period = child.parent!.period
+
+    expect(alloc.getVAT()).toEqual(vatData)
 })
