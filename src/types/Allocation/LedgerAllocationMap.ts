@@ -8,6 +8,7 @@ import { LedgerAccount, UNMAPPED_ACCOUNT } from "../Ledger/LedgerAccount"
 import { BankAccount } from "../LiquidAssets/BankAccount"
 import { Period } from "../Period"
 import assert from "assert"
+import { sortedArray } from "../../services/utils"
 
 /**
  * Record of LedgerAllocations indexed by id
@@ -34,10 +35,11 @@ export class LedgerAllocationMap {
     }
 
     /**
-     * Get all LedgerAllocations
+     * Get all LedgerAllocations, sorted descending
      */
     get allocations(): LedgerAllocation[] {
-        return Object.values(this.data).map(data => new LedgerAllocation(data))
+        const allocations = Object.values(this.data).map(data => new LedgerAllocation(data))
+        return sortedArray(allocations, a => a.sortKey, false)
     }
 
     /**
@@ -61,6 +63,7 @@ export class LedgerAllocationMap {
 
     /**
      * Get all ledgerAccounts that are used in at least 1 ledgerAllocation
+     * The results are sorted ascending
      */
     getLedgerAccounts(): LedgerAccount[] {
         const result = this.allocations.reduce((result, allocation) => {
@@ -68,7 +71,7 @@ export class LedgerAllocationMap {
             result[ledgerAccount.code] = allocation.ledgerAccount
             return result
         }, {} as Record<string, LedgerAccount>)
-        return Object.values(result)
+        return sortedArray(Object.values(result), LedgerAccount.sortKey)
     }
 
     /**
