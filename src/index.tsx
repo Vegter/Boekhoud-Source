@@ -31,6 +31,19 @@ const theme = unstable_createMuiStrictModeTheme({
 // Initialize Accounting
 setAccountingState(store)
 
+// Prevent accidental unload
+function confirmUnload(ev: BeforeUnloadEvent) {
+    ev.preventDefault();
+    let confirm:string|null = null
+    const age = store.getState().age.age
+    if (age > 0) {
+        // Warn user for unsaved changes
+        confirm = `Er zijn nog ${age} onbewaarde veranderingen`
+    }
+    return ev.returnValue = confirm
+}
+window.addEventListener("beforeunload", confirmUnload)
+
 ReactDOM.render(
   <React.StrictMode>
       <ThemeProvider theme={theme}>
