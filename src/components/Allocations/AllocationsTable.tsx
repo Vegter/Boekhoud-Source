@@ -8,12 +8,13 @@ import { LedgerAllocationMap } from "../../types/Allocation/LedgerAllocationMap"
 import { useTheme } from "@material-ui/core/styles"
 import { AllocationFilter } from "../../types/AllocationFilter"
 import { LedgerAccount } from "../../types/Ledger/LedgerAccount"
-import { setLedgerAccount, setVAT } from "../../app/AccountingSlice"
+import { setDate, setLedgerAccount, setVAT } from "../../app/AccountingSlice"
 import { useDispatch } from "react-redux"
 import SimilarAllocations, { Similar } from "./SimilarAllocations"
 import { VATSpecificationData } from "../../model"
 import { AccountSelectorWidth } from "../Editors/RGSAccountSelector"
 import { PeriodSelectorWidth } from "../Editors/PeriodSelector"
+import { DateString } from "../../types/DateString"
 
 interface AllocationsTableProps {
     allocations: LedgerAllocationMap
@@ -74,6 +75,13 @@ function AllocationsTable(props: AllocationsTableProps) {
         }))
     }
 
+    function updateDate(ledgerAllocation: LedgerAllocation, date: Date) {
+        dispatch(setDate({
+            allocationData: ledgerAllocation.data,
+            dateData: DateString.fromDate(date).data
+        }))
+    }
+
     return (
         <TableContainer component={Paper}>
         {similar && <SimilarAllocations similar={similar} onSimilar={onSimilar} />}
@@ -81,6 +89,7 @@ function AllocationsTable(props: AllocationsTableProps) {
             <Thead>
                 <Tr>
                     <Th style={{width: 85}}>Datum</Th>
+                    <Th style={{width: 85}}>Boeking</Th>
                     <Th style={{width: PeriodSelectorWidth}}>Periode</Th>
                     {debitCredit && <Th style={{width: 100}} align={"right"}>Debit</Th>}
                     {debitCredit && <Th style={{width: 100}} align={"right"}>Credit</Th>}
@@ -100,6 +109,7 @@ function AllocationsTable(props: AllocationsTableProps) {
                             <AllocationsTableRow key={allocation.id}
                                                  allocation={allocation}
                                                  debitCredit={debitCredit}
+                                                 updateDate={updateDate}
                                                  updateVAT={updateVAT}
                                                  updateLedgerAccount={updateLedgerAccount} />
                         )

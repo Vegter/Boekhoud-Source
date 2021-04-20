@@ -9,6 +9,7 @@ import { Period } from "../Period"
 import { LedgerScheme } from "../Ledger/LedgerScheme"
 import { AllocationFilter } from "../AllocationFilter"
 import { Amount } from "../Amount"
+import { DateString } from "../DateString"
 
 /**
  * LedgerAllocation
@@ -313,6 +314,10 @@ export class LedgerAllocation {
 
     set journalEntry(journalEntry: JournalEntry) {
         this.data.journalEntryRef = journalEntry.id
+    }
+
+    set date(date: DateString) {
+        this.journalEntry.date = date
     }
 
     addChild(child: LedgerAllocation) {

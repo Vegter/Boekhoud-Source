@@ -15,6 +15,7 @@ import { LedgerScheme } from "./Ledger/LedgerScheme"
 import { Period } from "./Period"
 import { JournalEntry } from "./Journal/JournalEntry"
 import { memoize } from "../services/memoize"
+import { DateString } from "./DateString"
 
 export class Accounting {
     /**
@@ -145,5 +146,13 @@ export class Accounting {
          */
         const allocation = this.allocations.getAllocation(allocationData.id)
         allocation.setVAT(vatSpecificationData)
+    }
+
+    setDate(allocationData: LedgerAllocationData, dateData: string) {
+        /**
+         * Specifies the VAT or deletes the VAT for the allocation
+         */
+        const allocation = this.allocations.getAllocation(allocationData.id)
+        allocation.date = new DateString(dateData)
     }
 }
