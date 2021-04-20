@@ -20,6 +20,7 @@ import {
 } from "../components/FileLoader/UploadLoadingProgress"
 import ImportDialog from "../components/FileLoader/ImportDialog"
 import { decryptJSON, isJSONEncrypted } from "../services/crypto"
+import { resetAge } from "../app/AgeSlice"
 
 function UploadPage() {
     const [ progress, setProgress ] = useState("")
@@ -76,6 +77,7 @@ function UploadPage() {
                     try {
                         JSON.parse(result)
                         restoreStateFromJSON(result, dispatch)
+                        dispatch(resetAge())
                         setProgress(`Bewaarde versie is ingelezen`)
                     } catch (e) {
                         console.error(e)
