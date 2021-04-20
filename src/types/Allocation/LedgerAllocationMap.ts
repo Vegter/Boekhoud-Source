@@ -219,17 +219,19 @@ export class LedgerAllocationMap {
      * For a mapped allocation the allocations that are bound to the same ledgerAccount are returned
      */
     getSimilarAllocations(allocation: LedgerAllocation): LedgerAllocation[] {
+        let result:LedgerAllocation[]
         if (allocation.hasParent()) {
             // Similarity is at parent level, child allocations do not have similar allocations
-            return []
+            result = []
         } else if (allocation.ledgerAccount.isUnmapped()) {
             // Return all similar unmapped allocations (bound to similar statementEntries)
             const statements = new Accounting().liquidAssets.getStatementEntryMap()
             const entries = statements.getSimilarEntries(allocation.statementEntry)
-            return this.getUnallocatedEntries(entries)
+            result = this.getUnallocatedEntries(entries)
         } else {
             // Return all allocations that are booked on the same account
-            return this.allocations.filter(a => a.ledgerAccount.equals(allocation.ledgerAccount))
+            result = this.allocations.filter(a => a.ledgerAccount.equals(allocation.ledgerAccount))
         }
+        return sortedArray(result, a => a.sortKey, false)
     }
 }
