@@ -123,6 +123,16 @@ export const AccountingSlice = createSlice({
             journal.invalidate()
             const accounting = new Accounting(state)
             accounting.setVAT(allocationData, vatSpecificationData)
+        },
+
+        setDate: (state,
+                  action: PayloadAction<{allocationData: LedgerAllocationData,
+                                         dateData: string}>) => {
+            const { allocationData, dateData } = action.payload
+            ledgerAllocations.invalidate()
+            journal.invalidate()
+            const accounting = new Accounting(state)
+            accounting.setDate(allocationData, dateData)
         }
     },
 });
@@ -137,6 +147,7 @@ export const { resetAccountingState,
     setPeriod,
     setReason,
     setVAT,
+    setDate,
     setLedgerAccount } = AccountingSlice.actions;
 
 const invalidateAll = () => {

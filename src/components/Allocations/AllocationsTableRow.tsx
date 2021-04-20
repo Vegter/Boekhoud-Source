@@ -12,6 +12,7 @@ import FormatAmount from "../Utils/FormatAmount"
 import FormatDate from "../Utils/FormatDate"
 import VATMenuButton from "../VAT/VATMenuButton"
 import { VATSpecificationData } from "../../model"
+import DateSelector from "../Selectors/DateSelector"
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -27,12 +28,13 @@ interface AllocationsTableRowProps {
     debitCredit: boolean
     updateLedgerAccount: (ledgerAllocation: LedgerAllocation, ledgerAccount: LedgerAccount) => void
     updateVAT: (ledgerAllocation: LedgerAllocation, vat: VATSpecificationData) => void
+    updateDate: (ledgerAllocation: LedgerAllocation, date: Date) => void
 }
 
 function AllocationsTableRow(props: AllocationsTableRowProps) {
     const classes = useStyles()
 
-    const { allocation, debitCredit, updateLedgerAccount, updateVAT } = props
+    const { allocation, debitCredit, updateLedgerAccount, updateVAT, updateDate } = props
 
     const { statementEntry } = allocation
 
@@ -46,10 +48,22 @@ function AllocationsTableRow(props: AllocationsTableRowProps) {
         }
     }
 
+    const onDate = (date: Date | null) => {
+        if (date) {
+            updateDate(allocation, date)
+        }
+    }
+
     return (
       <Tr key={allocation.id} className={showDetails ? "" : classes.childAllocationRow}>
         <Td>
           {showDetails && <FormatDate date={statementEntry.valueDate}/>}
+        </Td>
+
+        <Td>
+            {showDetails && <DateSelector label={""}
+                                          date={allocation.journalEntry.date.Date}
+                                          onDate={onDate} />}
         </Td>
 
         <Td>

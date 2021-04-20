@@ -24,6 +24,8 @@ import { MuiPickersUtilsProvider } from "@material-ui/pickers"
 import DateFnsUtils from "@date-io/date-fns"
 import { nl } from 'date-fns/locale'
 import VATPage from "./pages/VATPage"
+import { ThemeProvider } from "@material-ui/styles"
+import { createMuiTheme } from "@material-ui/core"
 
 function App() {
     const liquidAssets = useSelector(selectLiquidAssets)
@@ -42,12 +44,17 @@ function App() {
         [Routes.Home, HomePage],
     ]
 
+    const defaultMaterialTheme = createMuiTheme({
+        // Using standard theme for now
+    });
+
         return (
             <div className="App">
                 <BrowserRouter>
                     <ErrorBoundary>
                     <AppLoader>
                     <StateSync>
+                    <ThemeProvider theme={defaultMaterialTheme}>
                     <MuiPickersUtilsProvider utils={DateFnsUtils} locale={nl}>
                     <MenuAppBar title={APP.TITLE}>
                         <Switch>
@@ -61,6 +68,7 @@ function App() {
                         </Switch>
                     </MenuAppBar>
                     </MuiPickersUtilsProvider>
+                    </ThemeProvider>
                     </StateSync>
                     </AppLoader>
                     </ErrorBoundary>

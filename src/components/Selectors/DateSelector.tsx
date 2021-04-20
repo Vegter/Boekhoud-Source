@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { KeyboardDatePicker } from "@material-ui/pickers"
 import { useTheme } from "@material-ui/core/styles"
 import { useMediaQuery } from "@material-ui/core"
+import { Today } from "@material-ui/icons"
 
 interface DateSelectorProps {
     label: string
@@ -21,15 +22,12 @@ function DateSelector(props: DateSelectorProps) {
         props.onDate(date)
     }
 
-    const style = onXs ? {width: "96%"} : {}
+    const style = onXs ? {width: "96%"} : {width: 135}
 
     return (
         <KeyboardDatePicker
-            variant="dialog"
             style={style}
-            inputVariant="outlined"
             invalidDateMessage={"Ongeldige datum"}
-            margin="normal"
             label={label}
             format="dd-MM-yyyy"
             disableToolbar={true}
@@ -38,6 +36,10 @@ function DateSelector(props: DateSelectorProps) {
             onChange={onDate}
             onOpen={() => setIsOpen(true)}
             onClose={() => setIsOpen(false)}
+            keyboardIcon={<Today fontSize={"small"}/>}
+            InputProps={{
+                disableUnderline: true,
+            }}
             KeyboardButtonProps={{
                 'aria-label': `wijzig ${label}`,
             }}

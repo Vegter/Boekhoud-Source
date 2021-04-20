@@ -27,6 +27,10 @@ export class JournalEntry {
     get date(): DateString { return new DateString(this.data.date) }
     get legs(): EntryLeg[] { return this.data.entryLegsData.map(data => new EntryLeg(data))}
 
+    set date(date: DateString) {
+        this.data.date = date.data
+    }
+
     /**
      * Checks the integrity of the journalEntry
      *
