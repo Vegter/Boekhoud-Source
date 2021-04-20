@@ -2,7 +2,7 @@ import FileSaver from "file-saver"
 
 import { resetAccountingState, restoreAccountingState } from "../app/AccountingSlice"
 import { resetFilterState, restoreFilterState } from "../app/FilterSlice"
-import { restoreAgeState } from "../app/AgeSlice"
+import { resetAge, restoreAgeState } from "../app/AgeSlice"
 import { RootState } from "../app/store"
 import { Dispatch } from "react"
 import { APP } from "../config"
@@ -42,6 +42,7 @@ export function restoreStateFromJSON(json: string, dispatch: Dispatch<any>): voi
     try {
         const state: RootState = JSON.parse(json)
         restoreState(state, dispatch)
+        dispatch(resetAge())
     }
     catch {}
 }
