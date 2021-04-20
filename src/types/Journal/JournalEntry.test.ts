@@ -72,6 +72,11 @@ test("JournalEntry", () => {
     expect(entry.allocatedLeg.amount.value).toEqual(orgAmount)
     expect(entry.vatLegs.map(leg => leg.ledgerAccountCode)).toEqual([])
 
+    entry.setVAT(null)
+    expect(entry.data.vatSpecificationData).toBeUndefined()
+    expect(entry.allocatedLeg.amount.value).toEqual(orgAmount)
+    expect(entry.vatLegs.map(leg => leg.ledgerAccountCode)).toEqual([])
+
     vatData.lines = [{
             id: "any id",
             bruto: "100",
