@@ -57,11 +57,10 @@ test("State To/From Storage", () => {
 
     restoreStateFromStorage(mockStorage, mockDispatch)
 
-    expect(mockDispatch).toHaveBeenCalledTimes(4)
+    expect(mockDispatch).toHaveBeenCalledTimes(3)
     expect(mockDispatch).toHaveBeenCalledWith({"payload": {"state": 1}, "type": "accounting/restoreAccountingState"})
     expect(mockDispatch).toHaveBeenCalledWith({"payload": {"state": 2}, "type": "filter/restoreFilterState"})
     expect(mockDispatch).toHaveBeenCalledWith({"payload": {"state": 42}, "type": "age/restoreAgeState"})
-    expect(mockDispatch).toHaveBeenCalledWith({"type": "age/resetAge"})
 
     jest.clearAllMocks()
     resetState(mockDispatch)
