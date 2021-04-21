@@ -38,9 +38,9 @@ function AllocationsTableRow(props: AllocationsTableRowProps) {
 
     const { statementEntry } = allocation
 
-    const showDetails = !allocation.hasParent()    // Don't show details for children
+    const isMainAllocation = !allocation.hasParent()    // Don't show details for children
     const amount = statementEntry.amount
-    const disabled = allocation.hasChildren()
+    const hasChildren = allocation.hasChildren()
 
     const onVAT = (vatSpecification: VATSpecificationData | null) => {
         if (vatSpecification) {
@@ -55,47 +55,47 @@ function AllocationsTableRow(props: AllocationsTableRowProps) {
     }
 
     return (
-      <Tr key={allocation.id} className={showDetails ? "" : classes.childAllocationRow}>
+      <Tr key={allocation.id} className={isMainAllocation ? "" : classes.childAllocationRow}>
         <Td>
-          {showDetails && <FormatDate date={statementEntry.valueDate}/>}
+          {isMainAllocation && <FormatDate date={statementEntry.valueDate}/>}
         </Td>
 
         <Td>
-          {!showDetails && <DateSelector label={""}
+          {!hasChildren && <DateSelector label={""}
                                          date={allocation.journalEntry.date.Date}
                                          onDate={onDate} />}
         </Td>
 
         <Td>
-          <PeriodSelector key={allocation.period.string + disabled}
-                          disabled={disabled}
+          <PeriodSelector key={allocation.period.string + hasChildren}
+                          disabled={hasChildren}
                           allocation={allocation}/>
         </Td>
 
         {debitCredit &&
         <Td align="right">
-            {showDetails && amount.isDebit && <FormatAmount amount={amount} debitCredit={debitCredit} />}
+            {isMainAllocation && amount.isDebit && <FormatAmount amount={amount} debitCredit={debitCredit} />}
         </Td>}
 
         {debitCredit &&
         <Td align="right">
-            {showDetails && amount.isCredit && <FormatAmount amount={amount} debitCredit={debitCredit} />}
+            {isMainAllocation && amount.isCredit && <FormatAmount amount={amount} debitCredit={debitCredit} />}
         </Td>}
 
         {!debitCredit &&
         <Td align="right" colSpan={2}>
-          {showDetails && <FormatAmount amount={amount} debitCredit={debitCredit} />}
+          {isMainAllocation && <FormatAmount amount={amount} debitCredit={debitCredit} />}
         </Td>}
 
         <Td className={"noheader"}>
-          <RGSAccountSelector disabled={disabled}
+          <RGSAccountSelector disabled={hasChildren}
                               ledgerAccount={allocation.ledgerAccount}
                               accountOptions={LedgerScheme.allocatableAccounts}
                               onChange={(account: LedgerAccount) => updateLedgerAccount(allocation, account)}/>
         </Td>
 
         <Td className={"noheader"}>
-            {!disabled && <VATMenuButton allocation={allocation}
+            {!hasChildren && <VATMenuButton allocation={allocation}
                                          onClose={onVAT}/>}
         </Td>
 
