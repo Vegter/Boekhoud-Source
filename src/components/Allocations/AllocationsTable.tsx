@@ -89,7 +89,7 @@ function AllocationsTable(props: AllocationsTableProps) {
             <Thead>
                 <Tr>
                     <Th style={{width: 85}}>Datum</Th>
-                    <Th style={{width: 85}}>Boeking</Th>
+                    <Th style={{width: 85}}>Factuur</Th>
                     <Th style={{width: PeriodSelectorWidth}}>Periode</Th>
                     {debitCredit && <Th style={{width: 100}} align={"right"}>Debit</Th>}
                     {debitCredit && <Th style={{width: 100}} align={"right"}>Credit</Th>}
