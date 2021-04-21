@@ -165,7 +165,7 @@ export class JournalEntry {
     get vatDate(): Date | null {
         const vat = this.getVAT()
         if (vat) {
-            return new Date(vat.date)
+            return this.date.Date
         } else {
             return null
         }

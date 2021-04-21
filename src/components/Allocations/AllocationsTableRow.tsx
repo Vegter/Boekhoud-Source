@@ -61,9 +61,9 @@ function AllocationsTableRow(props: AllocationsTableRowProps) {
         </Td>
 
         <Td>
-            {showDetails && <DateSelector label={""}
-                                          date={allocation.journalEntry.date.Date}
-                                          onDate={onDate} />}
+          {!showDetails && <DateSelector label={""}
+                                         date={allocation.journalEntry.date.Date}
+                                         onDate={onDate} />}
         </Td>
 
         <Td>
