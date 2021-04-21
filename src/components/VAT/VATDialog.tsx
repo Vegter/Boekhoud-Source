@@ -55,7 +55,6 @@ export function VATDialog(props: VATDialogProps) {
     const bruto = Math.abs(allocation.statementEntry.amount.value)
     const isReversed = allocation.statementEntry.amount.value < 0
     const lines = isReversed ? VATLine.reverseLines(props.lines) : props.lines
-    const vatSpecificationData = allocation.journalEntry.data.vatSpecificationData
     const valueDate = allocation.statementEntry.valueDate
 
     const [autoCalc, setAutoCalc] = useState(true)
@@ -64,9 +63,7 @@ export function VATDialog(props: VATDialogProps) {
     const [vatLines, setVATLines] = useState<VATLine[]>(VATLine.updateVATChoices(lines, bruto, autoCalc))
     const [remaining, setRemaining] = useState(bruto)
     // const [expand, setExpand] = useState(false)
-    const [date, setDate] = useState<Date>(vatSpecificationData
-        ? new Date(vatSpecificationData.date)
-        : valueDate.Date)
+    const [date, setDate] = useState<Date>(allocation.journalEntry.date.Date)
 
     const OKButtonRef = useRef<any>(React.createRef())
 

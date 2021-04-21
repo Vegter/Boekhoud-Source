@@ -27,8 +27,15 @@ export class JournalEntry {
     get date(): DateString { return new DateString(this.data.date) }
     get legs(): EntryLeg[] { return this.data.entryLegsData.map(data => new EntryLeg(data))}
 
+    /**
+     * Set the journal entry date (invoice date)
+     */
     set date(date: DateString) {
         this.data.date = date.data
+        if (this.data.vatSpecificationData) {
+            // Update VAT specification
+            this.data.vatSpecificationData.date = date.data
+        }
     }
 
     /**
@@ -184,22 +191,25 @@ export class JournalEntry {
     setVAT(vatSpecificationData: VATSpecificationData | null) {
         this.data.entryLegsData.splice(2)   // Remove any existing VAT legs
         const lines = vatSpecificationData?.lines ?? []
-        if (vatSpecificationData && lines.length > 0) {
-            this.data.vatSpecificationData = vatSpecificationData
-            const netto = VATLine.addVATLines(lines).netto
-            const currency = this.allocatedLeg.amount.currency
-            lines.forEach(line => {
-                if (+line.vat !== 0) {
-                    this.data.entryLegsData.push({
-                        ledgerAccountCode: +line.vat < 0
-                            ? LEDGER_ACCOUNT.VAT_TO_BE_CLAIMED
-                            : LEDGER_ACCOUNT.VAT_TO_BE_PAID,
-                        amountData: Amount.fromAmountCurrency(+line.vat, currency).data
-                    })
-                }
-            })
-            // Alternative: amount = opposite.amount - vat
-            this.allocatedLeg.data.amountData = Amount.fromAmountCurrency(+netto, currency).data
+        if (vatSpecificationData) {
+            this.date = new DateString(vatSpecificationData.date)
+            if (lines.length > 0) {
+                this.data.vatSpecificationData = vatSpecificationData
+                const netto = VATLine.addVATLines(lines).netto
+                const currency = this.allocatedLeg.amount.currency
+                lines.forEach(line => {
+                    if (+line.vat !== 0) {
+                        this.data.entryLegsData.push({
+                            ledgerAccountCode: +line.vat < 0
+                                ? LEDGER_ACCOUNT.VAT_TO_BE_CLAIMED
+                                : LEDGER_ACCOUNT.VAT_TO_BE_PAID,
+                            amountData: Amount.fromAmountCurrency(+line.vat, currency).data
+                        })
+                    }
+                })
+                // Alternative: amount = opposite.amount - vat
+                this.allocatedLeg.data.amountData = Amount.fromAmountCurrency(+netto, currency).data
+            }
         } else {
             this.data.vatSpecificationData = undefined
             this.allocatedLeg.data.amountData = this.oppositeLeg.amount.reversed().data
