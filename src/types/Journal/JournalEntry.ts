@@ -8,6 +8,8 @@ import { VATLine } from "../VAT/VATLine"
 import { LEDGER_ACCOUNT } from "../../config"
 import { VATDeclaration, VATDeclarationTag } from "../VAT/VATDeclaration"
 import assert from "assert"
+import { VATRate } from "../VAT/VATRate"
+import { VATRates } from "../VAT/VATRates"
 
 /**
  * JournalEntry
@@ -162,6 +164,19 @@ export class JournalEntry {
         return this.data.entryLegsData
             .filter((_, i) => i >= 2)
             .map(data => new EntryLeg(data))
+    }
+
+    /**
+     * Returns an array of VAT rates that apply to this journal entry
+     */
+    get vatRates(): VATRate[] {
+        const vat = this.getVAT()
+        if (vat) {
+            const vatRates = new VATRates(this.date.Date).rates
+            return vat.lines.map(line => vatRates[line.id])
+        } else {
+            return []
+        }
     }
 
     /**
