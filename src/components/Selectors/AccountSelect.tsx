@@ -37,8 +37,4 @@ function AccountSelect(props: Props) {
     )
 }
 
-function areEqual(prevProps: Props, nextProps: Props) {
-    return prevProps.allocationFilter.ledgerAccountCode === nextProps.allocationFilter.ledgerAccountCode
-}
-
-export default React.memo(AccountSelect, areEqual)
+export default AccountSelect
