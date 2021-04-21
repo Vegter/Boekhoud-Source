@@ -66,6 +66,10 @@ test("JournalEntry", () => {
     expect(entry.vatLegs.map(leg => leg.ledgerAccountCode)).toEqual([LEDGER_ACCOUNT.VAT_TO_BE_PAID])
     expect(entry.vatDate).toEqual(new Date(vatData.date))
 
+    let updateDate = new DateString("2020-01-25")
+    entry.date = updateDate
+    expect(entry.vatDate).toEqual(updateDate.Date)
+
     vatData.lines = []
     entry.setVAT(vatData)
     expect(entry.data.vatSpecificationData).toBeUndefined()

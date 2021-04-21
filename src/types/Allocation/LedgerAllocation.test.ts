@@ -5,6 +5,7 @@ import { Period } from "../Period"
 import { LedgerAccount } from "../Ledger/LedgerAccount"
 import { AllocationFilter } from "../AllocationFilter"
 import { StatementEntry } from "../LiquidAssets/StatementEntry"
+import { DateString } from "../DateString"
 
 test("LedgerAllocation", () => {
     let mocked = new Mocked()
@@ -56,6 +57,10 @@ test("Split Allocation", () => {
 
     let data = mocked.ledgerAllocationData
     let alloc = new LedgerAllocation(data)
+
+    const updateDate = new DateString("2020-01-25")
+    alloc.date = updateDate
+    expect(alloc.journalEntry.date).toEqual(updateDate)
 
     let newPeriod = new Period("Any other period")
 

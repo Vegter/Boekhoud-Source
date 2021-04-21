@@ -24,7 +24,7 @@ test("VAT Declaration", () => {
     // LOW VAT = 18
     let vatLowLine = new VATLine(rates[VAT_LOW], 218)   // VAT 2 * 9 = 18
     let vatLowSpec: VATSpecificationData = {
-        date: date.toString(),
+        date: date.data,
         lines: [vatLowLine.data]
     }
     let lowEntry = new JournalEntry({...mocked.journalEntryData, id: "low"})
@@ -36,7 +36,7 @@ test("VAT Declaration", () => {
     // HIGH VAT = 21
     let vatHighLine = new VATLine(rates[VAT_HIGH], 126) // Round down: VAT 21.87 => 21
     let vatHighSpec: VATSpecificationData = {
-        date: date.toString(),
+        date: date.data,
         lines: [vatHighLine.data]
     }
     let highEntry = new JournalEntry({...mocked.journalEntryData, id: "high"})
@@ -48,7 +48,7 @@ test("VAT Declaration", () => {
     // PAID VAT = 21
     vatHighLine = new VATLine(rates[VAT_HIGH], -116) // Round up: VAT 20.13 => 21
     vatHighSpec = {
-        date: date.toString(),
+        date: date.data,
         lines: [vatHighLine.data]
     }
     let paidEntry = new JournalEntry({...mocked.journalEntryData, id: "paid"})
