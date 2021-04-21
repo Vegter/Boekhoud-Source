@@ -64,8 +64,7 @@ function StatementAllocations(props: StatementAllocationsProps) {
 
     return (
         <div>
-            <AllocationsHeader key={Math.random()}
-                               allocations={allocations}
+            <AllocationsHeader allocations={allocations}
                                allocationFilter={allocationFilter}/>
 
             <InfiniteScroll loader={loader}
