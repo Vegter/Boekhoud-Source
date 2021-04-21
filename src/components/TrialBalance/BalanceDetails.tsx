@@ -43,10 +43,13 @@ export function BalanceDetails(props: { journal: Journal, account: LedgerAccount
                 <Td/>
             </Tr>}
             {entries.slice(0, viewPort).map(entry => {
+                const fullEntry = journal.getJournalEntry(entry.id)
+                const rates = fullEntry.vatRates.map(rate => rate.percentageString).join(", ")
                 return entry.legs.map((leg, i) => (
                     <Tr key={`${entry.id}.${i}`} className={classes.childRow}>
                         <Td className={`${classes.subDescription} noheader`}>
                             {entry.reason}
+                            {rates && `(${rates})`}
                             {leg.tag && ` (${leg.tag})`}
                         </Td>
                         <Td align="right">

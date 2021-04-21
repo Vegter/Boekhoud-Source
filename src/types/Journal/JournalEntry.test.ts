@@ -6,6 +6,8 @@ import { DateString } from "../DateString"
 import { EntryLeg } from "./EntryLeg"
 import { LEDGER_ACCOUNT } from "../../config"
 import { AssertionError } from "assert"
+import { VAT_HIGH } from "../VAT/VATHistory"
+import { VATRates } from "../VAT/VATRates"
 
 test("JournalEntry", () => {
     let entry: JournalEntry
@@ -51,9 +53,9 @@ test("JournalEntry", () => {
 
     expect(entry.vatDate).toBeNull()
     let vatData = {
-        date: "2010-12-31",
+        date: "2015-12-31",
         lines: [{
-            id: "any id",
+            id: VAT_HIGH,
             bruto: "100",
             vat: "10",
             netto: "90"
@@ -65,6 +67,8 @@ test("JournalEntry", () => {
     expect(entry.allocatedLeg.amount.value).toEqual(90)
     expect(entry.vatLegs.map(leg => leg.ledgerAccountCode)).toEqual([LEDGER_ACCOUNT.VAT_TO_BE_PAID])
     expect(entry.vatDate).toEqual(new Date(vatData.date))
+    const vatRates = new VATRates(new Date(vatData.date)).rates
+    expect(entry.vatRates).toEqual(vatData.lines.map(l => vatRates[l.id]))
 
     let updateDate = new DateString("2020-01-25")
     entry.date = updateDate
@@ -75,6 +79,7 @@ test("JournalEntry", () => {
     expect(entry.data.vatSpecificationData).toBeUndefined()
     expect(entry.allocatedLeg.amount.value).toEqual(orgAmount)
     expect(entry.vatLegs.map(leg => leg.ledgerAccountCode)).toEqual([])
+    expect(entry.vatRates).toEqual([])
 
     entry.setVAT(null)
     expect(entry.data.vatSpecificationData).toBeUndefined()
