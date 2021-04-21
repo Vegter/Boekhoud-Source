@@ -144,6 +144,19 @@ test("setPeriod", () => {
     expect(splitAllocation.data).toBeUndefined()
 
     expect(accounting.allocations.length).toEqual(length)
+
+    // Update date in same period
+    let updateDate = new DateString(allocation.period.string + "-02-26")
+    accounting.setDate(mocked.ledgerAllocationData, updateDate.data)
+    expect(allocation.journalEntry.date).toEqual(updateDate)
+
+    // Update date in new period
+    const otherPeriod = new Period((+allocation.period.string + 1).toString())
+    updateDate = new DateString(otherPeriod.string + "-02-26")
+    accounting.setDate(mocked.ledgerAllocationData, updateDate.data)
+    expect(allocation.journalEntry.date).toEqual(updateDate)
+    splitAllocation = accounting.allocations.getAllocation(allocation.getSplitId(otherPeriod))
+    expect(splitAllocation.period.string).toEqual(otherPeriod.string)
 })
 
 test("setReason", () => {
@@ -219,7 +232,4 @@ test("setVAT", () => {
     expect(vatLeg.amount.amount).toEqual(10)
     expect(allocation.journalEntry.data.vatSpecificationData).toEqual(data)
 
-    const updateDate = new DateString("2020-02-26")
-    accounting.setDate(mocked.ledgerAllocationData, updateDate.data)
-    expect(allocation.journalEntry.date).toEqual(updateDate)
 })

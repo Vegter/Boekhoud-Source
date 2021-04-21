@@ -154,5 +154,11 @@ export class Accounting {
          */
         const allocation = this.allocations.getAllocation(allocationData.id)
         allocation.date = new DateString(dateData)
+        // Default behaviour is to have invoice date and period equal
+        // This can be undone by the user by setting the period explicitly afterwards
+        const datePeriod = Period.fromDate(allocation.journalEntry.date)
+        if (! datePeriod.equals(allocation.period)) {
+            this.setPeriod(allocationData, datePeriod.data)
+        }
     }
 }
