@@ -8,6 +8,7 @@ import { LEDGER_ACCOUNT } from "../config"
 
 import { Amount } from "./Amount"
 import { Mocked } from "./mocks"
+import { DateString } from "./DateString"
 
 LedgerScheme.Data = new Mocked().ledgerAccounts
 
@@ -199,7 +200,7 @@ test("setVAT", () => {
     expect(vatLegs).toEqual([])
 
     const data = {
-        date: "any date",
+        date: "2020-01-25",
         lines: [{
             id: "any id",
             bruto: "100",
@@ -218,4 +219,7 @@ test("setVAT", () => {
     expect(vatLeg.amount.amount).toEqual(10)
     expect(allocation.journalEntry.data.vatSpecificationData).toEqual(data)
 
+    const updateDate = new DateString("2020-02-26")
+    accounting.setDate(mocked.ledgerAllocationData, updateDate.data)
+    expect(allocation.journalEntry.date).toEqual(updateDate)
 })
