@@ -45,7 +45,13 @@ function App() {
     ]
 
     const defaultMaterialTheme = createMuiTheme({
-        // Using standard theme for now
+        overrides: {
+            MuiInputBase: {
+                root: {
+                    fontSize: "0.875rem"
+                }
+            }
+        }
     });
 
         return (
