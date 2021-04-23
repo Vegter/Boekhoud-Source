@@ -9,6 +9,7 @@ import {
     MenuBook,
     PlaylistAdd,
     ShowChart,
+    NoteOutlined,
     Domain
 } from "@material-ui/icons"
 
@@ -27,7 +28,8 @@ const icon: Record<string, JSX.Element> = {
     [Routes.Upload.id]: <CloudUpload/>,
     [Routes.Bank.id]: <AccountBalance/>,
     [Routes.Charts.id]: <ShowChart/>,
-    [Routes.VAT.id]: <Domain/>
+    [Routes.VAT.id]: <Domain/>,
+    [Routes.Memorial.id]: <NoteOutlined/>
 }
 
 function RouteIcon(props: RouteIconProps) {

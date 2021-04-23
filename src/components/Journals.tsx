@@ -1,12 +1,16 @@
 import React, { useState } from 'react'
+import { useHistory } from "react-router-dom"
 
-import { makeStyles, Paper, TableContainer } from "@material-ui/core"
+import { Grid, makeStyles, Paper, TableContainer } from "@material-ui/core"
 import { createStyles } from "@material-ui/core/styles"
+import IconButton from "@material-ui/core/IconButton"
+import { InfoOutlined } from "@material-ui/icons"
 
 import { Table, Thead, Tbody, Tr, Th, Td } from './ResponsiveTable';
 
 import InfiniteScroll from "react-infinite-scroller"
 
+import { Routes } from "../routes/routes"
 import { Journal } from "../types/Journal/Journal"
 import { JournalEntry } from "../types/Journal/JournalEntry"
 
@@ -32,6 +36,7 @@ interface JournalProps {
 
 function Journals(props: JournalProps) {
     const [viewPort, setViewPort] = useState(0)
+    const history = useHistory()
 
     const { journal } = props
     const classes = useStyles()
@@ -42,6 +47,11 @@ function Journals(props: JournalProps) {
     const filteredEntries = entries.slice(0, viewPort)
     const hasMore = viewPort < entries.length
     const loadMore = () => setViewPort(viewPort + 50)
+
+    const editEntry = (entry: JournalEntry) => {
+        const editRef = Routes.Memorial.path
+        history.push(`${editRef}?id=${entry.id}`)
+    }
 
     return (
         <div>
@@ -60,7 +70,19 @@ function Journals(props: JournalProps) {
                             return (
                                 <React.Fragment key={entry.id}>
                                     <Tr className={classes.headerRow}>
-                                        <Td colSpan={5} className={classes.header}>{entry.reason}</Td>
+                                        <Td colSpan={5} className={classes.header}>
+                                            <Grid container alignItems={"center"} spacing={1}>
+                                                <Grid item>
+                                                    <IconButton onClick={() => editEntry(entry)}
+                                                                aria-label={"Edit entry"} size={"small"}>
+                                                        <InfoOutlined/>
+                                                    </IconButton>
+                                                </Grid>
+                                                <Grid item>
+                                                    {entry.reason}
+                                                </Grid>
+                                            </Grid>
+                                        </Td>
                                     </Tr>
                                     {entry.legs.map((leg, i) => {
                                         const ledgerAccount = leg.ledgerAccount

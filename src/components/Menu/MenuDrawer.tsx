@@ -112,6 +112,7 @@ export default function MenuDrawer(props: MenuDrawerProps) {
         Routes.Map,
         Routes.TrialBalance,
         Routes.Journal,
+        Routes.Memorial,
         Routes.VAT,
         "divider",
         Routes.Charts,
@@ -126,6 +127,7 @@ export default function MenuDrawer(props: MenuDrawerProps) {
         Routes.TrialBalance,
         Routes.Journal,
         Routes.VAT,
+        Routes.Memorial,
         Routes.Charts
     ].map(routeItem => routeItem.id)
 

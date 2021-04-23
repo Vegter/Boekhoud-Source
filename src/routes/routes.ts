@@ -50,6 +50,11 @@ export const Routes = {
         text: "BTW Aangifte",
         path: "/vat"
     },
+    Memorial: {
+        id: "Memorial",
+        text: "Memoriaal",
+        path: "/memo"
+    },
     Home: {
         id: "Home",
         text: "Home",
