@@ -12,6 +12,7 @@ import JournalPage from "./pages/JournalPage"
 import LedgerPage from "./pages/LedgerPage"
 import MenuAppBar from "./components/Menu/MenuAppBar"
 import ChartsPage from "./pages/ChartsPage"
+import MemorialPage from "./pages/MemorialPage"
 
 import { RouteItem, Routes } from "./routes/routes"
 import StateSync from "./components/Utils/StateSync"
@@ -41,6 +42,7 @@ function App() {
         [Routes.Bank, requiresData(BankPage)],
         [Routes.Upload, UploadPage],
         [Routes.Charts, ChartsPage],
+        [Routes.Memorial, MemorialPage],
         [Routes.Home, HomePage],
     ]
 

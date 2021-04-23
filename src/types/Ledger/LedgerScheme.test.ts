@@ -60,7 +60,7 @@ test("LedgerScheme", async () => {
 
     await LedgerScheme.load(false)
     expect(LedgerScheme.ledgerAccounts.length).toEqual(testAccounts.length + 1)   // Include unmapped account
-    expect(codes(LedgerScheme.allocatableAccounts)).toEqual([unmapped, BANK_4, ALLOC_4])   // Include unmapped account (level 4)
+    expect(codes(LedgerScheme.allocatableAccounts)).toEqual([unmapped, ALLOC_4])   // Include unmapped account (level 4)
     expect(codes(LedgerScheme.bankAccounts)).toEqual([BANK_4])  // Only level 4 is allocatable
     expect(codes(LedgerScheme.balanceAccounts)).toEqual([unmapped, ALLOC_4])
     expect(codes(LedgerScheme.orphans)).toEqual([ORPHAN_2, ORPHAN_3_NOT_IN_ACCOUNTS])
