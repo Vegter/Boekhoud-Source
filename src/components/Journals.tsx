@@ -4,7 +4,6 @@ import { useHistory } from "react-router-dom"
 import { Grid, makeStyles, Paper, TableContainer } from "@material-ui/core"
 import { createStyles } from "@material-ui/core/styles"
 import IconButton from "@material-ui/core/IconButton"
-import { InfoOutlined } from "@material-ui/icons"
 
 import { Table, Thead, Tbody, Tr, Th, Td } from './ResponsiveTable';
 
@@ -18,6 +17,7 @@ import { sortedArray } from "../services/utils"
 import FormatDate from "./Utils/FormatDate"
 import FormatAmount from "./Utils/FormatAmount"
 import FormatPeriod from "./Utils/FormatPeriod"
+import RouteIcon from "../routes/RouteIcon"
 
 const useStyles = makeStyles((/*theme: Theme*/) =>
     createStyles({
@@ -49,7 +49,7 @@ function Journals(props: JournalProps) {
     const loadMore = () => setViewPort(viewPort + 50)
 
     const editEntry = (entry: JournalEntry) => {
-        const editRef = Routes.Memorial.path
+        const editRef = Routes.Edit.path
         history.push(`${editRef}?id=${entry.id}`)
     }
 
@@ -75,7 +75,7 @@ function Journals(props: JournalProps) {
                                                 <Grid item>
                                                     <IconButton onClick={() => editEntry(entry)}
                                                                 aria-label={"Edit entry"} size={"small"}>
-                                                        <InfoOutlined/>
+                                                        {RouteIcon({id: Routes.Edit.id})}
                                                     </IconButton>
                                                 </Grid>
                                                 <Grid item>

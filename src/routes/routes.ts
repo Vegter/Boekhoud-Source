@@ -55,6 +55,11 @@ export const Routes = {
         text: "Memoriaal",
         path: "/memo"
     },
+    Edit: {
+        id: "JournalEntryEdit",
+        text: "Bewerken",
+        path: "/edit"
+    },
     Home: {
         id: "Home",
         text: "Home",

@@ -43,6 +43,7 @@ function App() {
         [Routes.Upload, UploadPage],
         [Routes.Charts, ChartsPage],
         [Routes.Memorial, MemorialPage],
+        [Routes.Edit, MemorialPage],
         [Routes.Home, HomePage],
     ]
 

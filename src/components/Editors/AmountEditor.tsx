@@ -8,7 +8,7 @@ interface VATAmountProps {
     disabled?: boolean
 }
 
-function VATAmount(props: VATAmountProps) {
+function AmountEditor(props: VATAmountProps) {
     const { value, disabled = false } = props
 
     const onChange = (event: any) => {
@@ -38,4 +38,4 @@ function VATAmount(props: VATAmountProps) {
     )
 }
 
-export default VATAmount;
+export default AmountEditor;

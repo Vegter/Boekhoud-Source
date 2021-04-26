@@ -10,7 +10,8 @@ import {
     PlaylistAdd,
     ShowChart,
     NoteOutlined,
-    Domain
+    Domain,
+    EditOutlined
 } from "@material-ui/icons"
 
 import { Routes } from "./routes"
@@ -29,7 +30,8 @@ const icon: Record<string, JSX.Element> = {
     [Routes.Bank.id]: <AccountBalance/>,
     [Routes.Charts.id]: <ShowChart/>,
     [Routes.VAT.id]: <Domain/>,
-    [Routes.Memorial.id]: <NoteOutlined/>
+    [Routes.Memorial.id]: <NoteOutlined/>,
+    [Routes.Edit.id]: <EditOutlined/>
 }
 
 function RouteIcon(props: RouteIconProps) {
