@@ -9,7 +9,7 @@ import { Accounting } from "../Accounting"
 import { EntryLegData, JournalEntryData } from "../../model"
 
 class LegEditor {
-    static readonly MANUAL_LEG = -1
+    static readonly MANUAL_LEG = -1     // Manually added leg, not bound to a journalEntry leg
 
     id: number
     account: LedgerAccount
@@ -26,7 +26,10 @@ class LegEditor {
         this.credit = "0"
         this.creditValue = 0
     }
-    
+
+    /**
+     * Construct a legEditor from an entryLeg
+     */
     static fromEntryLeg(leg: EntryLeg, id: number) {
         const legEditor = new LegEditor()
         const amount = leg.amount
@@ -45,6 +48,9 @@ class LegEditor {
         return Amount.fromAmountCurrency(this.creditValue - this.debitValue, Accounting.currency)
     }
 
+    /**
+     * Convert this leg to entryLegData
+     */
     get entryLegData(): EntryLegData {
         return {
             ledgerAccountCode: this.account.code,
@@ -52,10 +58,18 @@ class LegEditor {
         }
     }
 
+    /**
+     * Update the account for this leg
+     * @param account
+     */
     updateAccount(account: LedgerAccount) {
         this.account = account
     }
-    
+
+    /**
+     * Update the leg amount
+     * Allow for data that is no number (eg 1.) but convert to a number whenever possible
+     */
     updateAmount(creditDebit: CreditDebit, value: string) {
         const stringValue = value || ""
         if (creditDebit === CreditDebit.Debit) {
@@ -77,6 +91,10 @@ class LegEditor {
         }
     }
 
+    /**
+     * Finalize the amounts
+     * If a debit amount has been registered then clear the credit amount (and vice versa)
+     */
     finalizeAmount() {
         if (this.creditValue) {
             this.credit = this.creditValue.toFixed(2)
@@ -106,9 +124,13 @@ export class JournalEditor {
         this._date = new Date()
         this._period = Period.fromDate(DateString.fromDate(this._date))
         this._legs = []
+        // Minimally one leg is required
         this.addLeg()
     }
 
+    /**
+     * Creates a new editor for the given journalEntry
+     */
     static fromJournalEntry(journalEntry: JournalEntry) {
         const journalEditor = new JournalEditor()
         journalEditor._reason = journalEntry.reason
@@ -119,6 +141,9 @@ export class JournalEditor {
         return journalEditor
     }
 
+    /**
+     * Returns a shallow clone of the current editor
+     */
     clone() {
         const journalEditor = new JournalEditor()
         journalEditor._reason = this._reason
@@ -142,10 +167,16 @@ export class JournalEditor {
         this._legs.push(new LegEditor())
     }
 
+    /**
+     * Remove leg by its index
+     */
     removeLeg(i: number) {
         this._legs.splice(i, 1)
     }
 
+    /**
+     * Returns the total debit anc credit amounts for the legs
+     */
     totals() {
         return this.legs.reduce((sum, leg) => {
             let { debit, credit } = sum
@@ -155,6 +186,10 @@ export class JournalEditor {
         }, { debit: 0, credit: 0 })
     }
 
+    /**
+     * Tells if the current data is valid
+     * Only valid data can be applied and stored in the journal
+     */
     isValid() {
         const { debit, credit } = this.totals()
         return debit !== 0 &&
@@ -164,10 +199,19 @@ export class JournalEditor {
             ! this.legs.find(leg => leg.account === LedgerScheme.unmapped)
     }
 
+    /**
+     * Tells is the current data can be deleted from the journal
+     * Only data that consists of legs that are freely allocatable can be deleted
+     * If any of the legs is bound to a bankaccount the data cannot be deleted
+     */
     canBeDeleted() {
-        return this.isValid() && ! this.legs.find(leg => ! leg.account.isAllocatable)
+        return ! this.legs.find(leg => ! leg.account.isAllocatable)
     }
 
+    /**
+     * Apply the current data to the given journalEntry (or construct a new one if missing)
+     * The applied data will be returned
+     */
     apply(journalEntry?: JournalEntry): JournalEntryData {
         let data: JournalEntryData
         if (journalEntry) {
