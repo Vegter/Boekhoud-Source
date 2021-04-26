@@ -2,6 +2,14 @@
 
 ## Functional Information
 
+For a short introduction :
+
+<a href="http://www.youtube.com/watch?feature=player_embedded&v=Vl_a01fvVyg
+" target="_blank"><img src="http://img.youtube.com/vi/Vl_a01fvVyg/0.jpg"
+alt="Short Introduction" width="240" height="180" border="10" /></a>
+
+> Note: VAT and memorial bookings are missing in the video but have already been implemented
+
 The current version of the software can be found at:
 
 - [GitHub Pages](https://vegter.github.io/Boekhoud-Source/)
@@ -62,7 +70,8 @@ After the project has been initialized use any of the following commands:
 
 ### `yarn start`
 
-Runs the app in the development mode.<br />
+Runs the app in the development mode.
+
 Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
 The page will reload if you make edits.<br />
