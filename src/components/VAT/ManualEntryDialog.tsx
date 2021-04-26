@@ -5,7 +5,7 @@ import { DialogActions, DialogContent, DialogTitle } from "../Utils/CustomDialog
 import Button from "@material-ui/core/Button"
 import { Table, Tbody, Td, Th, Thead, Tr } from "react-super-responsive-table"
 import { VATRate } from "../../types/VAT/VATRate"
-import VATAmount from "./VATAmount"
+import AmountEditor from "../Editors/AmountEditor"
 import { VATLine } from "../../types/VAT/VATLine"
 import { VATSpecificationEntryData } from "../../model"
 
@@ -102,19 +102,19 @@ function ManualEntryDialog(props: ManualEntryDialogProps) {
                         {showBrutoNetto && <Tr>
                             <Td>Excl. BTW</Td>
                             <Td>
-                                <VATAmount value={line.netto} onChange={onNetto} onBlur={onBlur}/>
+                                <AmountEditor value={line.netto} onChange={onNetto} onBlur={onBlur}/>
                             </Td>
                         </Tr>}
                         <Tr>
                             <Td>BTW</Td>
                             <Td>
-                                <VATAmount value={line.vat} onChange={onVAT} onBlur={onBlur}/>
+                                <AmountEditor value={line.vat} onChange={onVAT} onBlur={onBlur}/>
                             </Td>
                         </Tr>
                         {showBrutoNetto && <Tr>
                             <Td>Incl. BTW</Td>
                             <Td>
-                                <VATAmount value={line.bruto} onChange={onBruto} onBlur={onBlur}/>
+                                <AmountEditor value={line.bruto} onChange={onBruto} onBlur={onBlur}/>
                             </Td>
                         </Tr>}
                     </Tbody>

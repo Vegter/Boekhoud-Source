@@ -10,7 +10,7 @@ import { VATRates } from "../../types/VAT/VATRates"
 import VATSelector from "./VATSelector"
 import { NO_VAT, VATRate } from "../../types/VAT/VATRate"
 import { Amount } from "../../types/Amount"
-import VATAmount from "./VATAmount"
+import AmountEditor from "../Editors/AmountEditor"
 import FormatAmount from "../Utils/FormatAmount"
 import { LedgerAllocation } from "../../types/Allocation/LedgerAllocation"
 import DateSelector from "../Selectors/DateSelector"
@@ -205,21 +205,21 @@ export function VATDialog(props: VATDialogProps) {
                                             </Td>
                                             <Td>
                                                 {/*Bruto (Incl VAT)*/}
-                                                <VATAmount value={line.bruto}
+                                                <AmountEditor value={line.bruto}
                                                            disabled={!line.vatRate}
                                                            onBlur={() => onFinalValue(line, line.bruto, line.setBruto.bind(line))}
                                                            onChange={value => onChangeValue(line, value, line.setBruto.bind(line))}/>
                                             </Td>
                                             <Td>
                                                 {/*VAT*/}
-                                                <VATAmount value={line.vat}
+                                                <AmountEditor value={line.vat}
                                                            disabled={percentage === 0}
                                                            onChange={value => onChangeValue(line, value, line.setVAT.bind(line))}
                                                            onBlur={() => onFinalValue(line, line.vat, line.setVAT.bind(line))}/>
                                             </Td>
                                             <Td>
                                                 {/*Netto (Excl VAT)*/}
-                                                <VATAmount value={line.netto}
+                                                <AmountEditor value={line.netto}
                                                            disabled={percentage === 0}
                                                            onBlur={() => onFinalValue(line, line.netto, line.setNetto.bind(line))}
                                                            onChange={value => onChangeValue(line, value, line.setNetto.bind(line))}/>

@@ -15,7 +15,7 @@ import PageHeader from "./PageHeader"
 import DateSelector from "../components/Selectors/DateSelector"
 import FormatAmount from "../components/Utils/FormatAmount"
 import RGSAccountSelector from "../components/Editors/RGSAccountSelector"
-import VATAmount from "../components/VAT/VATAmount"
+import AmountEditor from "../components/Editors/AmountEditor"
 import { Table, Thead, Tr, Th, Tbody, Td } from "../components/ResponsiveTable"
 
 import { LedgerAccount } from "../types/Ledger/LedgerAccount"
@@ -110,7 +110,7 @@ function MemorialPage() {
 
     return (
         <div>
-            <PageHeader title={Routes.Memorial} periodFilter={false} withName={false}/>
+            <PageHeader title={journalEntry ? Routes.Edit : Routes.Memorial} periodFilter={false} withName={false}/>
 
             <Paper elevation={3} className={classes.paper}>
 
@@ -177,14 +177,14 @@ function MemorialPage() {
                                                             onChange={onLedgerAccount}/>
                                     </Td>
                                     <Td className={classes.amount}>
-                                        <VATAmount value={leg.debit}
-                                                   onChange={onDebit}
-                                                   onBlur={onBlur} />
+                                        <AmountEditor value={leg.debit}
+                                                      onChange={onDebit}
+                                                      onBlur={onBlur} />
                                     </Td>
                                     <Td className={classes.amount}>
-                                        <VATAmount value={leg.credit}
-                                                   onChange={onCredit}
-                                                   onBlur={onBlur} />
+                                        <AmountEditor value={leg.credit}
+                                                      onChange={onCredit}
+                                                      onBlur={onBlur} />
                                     </Td>
                                     <Td className={classes.amount}>
                                         <IconButton onClick={deleteLine}><DeleteIcon/></IconButton>
