@@ -8,6 +8,7 @@ interface DateSelectorProps {
     label: string
     date: Date
     onDate: (date: Date | null) => void
+    disableUnderline?: boolean
 }
 
 function DateSelector(props: DateSelectorProps) {
@@ -38,7 +39,7 @@ function DateSelector(props: DateSelectorProps) {
             onClose={() => setIsOpen(false)}
             keyboardIcon={<Today fontSize={"small"}/>}
             InputProps={{
-                disableUnderline: true,
+                disableUnderline: props.disableUnderline ?? true,
             }}
             KeyboardButtonProps={{
                 'aria-label': `wijzig ${label}`,
