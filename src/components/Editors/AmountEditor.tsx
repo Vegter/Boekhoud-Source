@@ -1,14 +1,14 @@
 import React from 'react'
 import { TextField } from "@material-ui/core"
 
-interface VATAmountProps {
+interface AmountEditorProps {
     value: string,
     onChange: (value: string) => void
     onBlur: () => void
     disabled?: boolean
 }
 
-function AmountEditor(props: VATAmountProps) {
+function AmountEditor(props: AmountEditorProps) {
     const { value, disabled = false } = props
 
     const onChange = (event: any) => {
