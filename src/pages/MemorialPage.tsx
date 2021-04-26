@@ -43,6 +43,9 @@ const useStyles = makeStyles(() =>
         },
         amount: {
             textAlign: "right"
+        },
+        totals: {
+            fontWeight: "bold"
         }
     }),
 );
@@ -114,7 +117,7 @@ function MemorialPage() {
 
             <Paper elevation={3} className={classes.paper}>
 
-            <Grid container justify={"space-between"} spacing={4} className={classes.headerGrid}>
+            <Grid container alignItems={"flex-start"} justify={"space-between"} spacing={4} className={classes.headerGrid}>
                 <Grid item>
                     <TextField value={data.reason}
                                className={classes.description}
@@ -125,6 +128,7 @@ function MemorialPage() {
 
                 <Grid item>
                     <DateSelector label={"Datum"}
+                                  disableUnderline={false}
                                   date={data.date}
                                   onDate={onDate} />
                 </Grid>
@@ -202,7 +206,7 @@ function MemorialPage() {
                                 </Tr>)
                         }
                     })}
-                    <Tr>
+                    <Tr className={classes.totals}>
                         <Td>Totaal</Td>
                         <Td className={classes.amount}>
                             <FormatAmount amount={Amount.fromAmountCurrency(debit, currency)} debitCredit={false} />
@@ -218,11 +222,10 @@ function MemorialPage() {
             </Table>
 
             <Grid container spacing={2} justify={"flex-end"} className={classes.footerGrid}>
-                {journalEntry && <Grid item>
-                    <Button disabled={!data.canBeDeleted()}
-                        onClick={onDelete}
-                        variant={"contained"}
-                        color={"primary"}>
+                {journalEntry && data.canBeDeleted() && <Grid item>
+                    <Button onClick={onDelete}
+                            variant={"contained"}
+                            color={"primary"}>
                         Verwijder
                     </Button>
                 </Grid>}
