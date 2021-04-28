@@ -58,6 +58,7 @@ const useStyles = makeStyles(() =>
 function MemorialPage() {
     const [journalEntry, setJournalEntry] = React.useState<JournalEntry | undefined>(undefined)
     const [data, setData] = React.useState<JournalEditor>(new JournalEditor())
+    const [template, setTemplate] = React.useState("")
 
     const classes = useStyles()
     const dispatch = useDispatch()
@@ -116,11 +117,13 @@ function MemorialPage() {
     }
 
     const templates = EditorTemplates
-    const template = ""
 
     const onTemplate = (id: string | null) => {
         if (id) {
+            setTemplate(id)
             setData(JournalEditor.fromTemplate(id))
+        } else {
+            setTemplate("")
         }
     }
 
