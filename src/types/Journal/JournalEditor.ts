@@ -205,7 +205,7 @@ export class JournalEditor {
      * If any of the legs is bound to a bankaccount the data cannot be deleted
      */
     canBeDeleted() {
-        return ! this.legs.find(leg => ! leg.account.isAllocatable)
+        return this.legs.every(leg => leg.account.isEditable)
     }
 
     /**
