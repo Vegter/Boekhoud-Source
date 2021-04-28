@@ -1,26 +1,26 @@
 {
   "files": {
     "main.css": "/Boekhoud-Source/static/css/main.ab073d7e.chunk.css",
-    "main.js": "/Boekhoud-Source/static/js/main.02c20aa9.chunk.js",
-    "main.js.map": "/Boekhoud-Source/static/js/main.02c20aa9.chunk.js.map",
+    "main.js": "/Boekhoud-Source/static/js/main.ed594fe6.chunk.js",
+    "main.js.map": "/Boekhoud-Source/static/js/main.ed594fe6.chunk.js.map",
     "runtime-main.js": "/Boekhoud-Source/static/js/runtime-main.4a079392.js",
     "runtime-main.js.map": "/Boekhoud-Source/static/js/runtime-main.4a079392.js.map",
     "static/css/2.11bf360b.chunk.css": "/Boekhoud-Source/static/css/2.11bf360b.chunk.css",
-    "static/js/2.9e8d4b71.chunk.js": "/Boekhoud-Source/static/js/2.9e8d4b71.chunk.js",
-    "static/js/2.9e8d4b71.chunk.js.map": "/Boekhoud-Source/static/js/2.9e8d4b71.chunk.js.map",
-    "bb4f90f54f2b6d773871.worker.js": "/Boekhoud-Source/bb4f90f54f2b6d773871.worker.js",
-    "bb4f90f54f2b6d773871.worker.js.LICENSE.txt": "/Boekhoud-Source/bb4f90f54f2b6d773871.worker.js.LICENSE.txt",
-    "bb4f90f54f2b6d773871.worker.js.map": "/Boekhoud-Source/bb4f90f54f2b6d773871.worker.js.map",
+    "static/js/2.f74a278d.chunk.js": "/Boekhoud-Source/static/js/2.f74a278d.chunk.js",
+    "static/js/2.f74a278d.chunk.js.map": "/Boekhoud-Source/static/js/2.f74a278d.chunk.js.map",
+    "e808bc18f49c23081b70.worker.js": "/Boekhoud-Source/e808bc18f49c23081b70.worker.js",
+    "e808bc18f49c23081b70.worker.js.LICENSE.txt": "/Boekhoud-Source/e808bc18f49c23081b70.worker.js.LICENSE.txt",
+    "e808bc18f49c23081b70.worker.js.map": "/Boekhoud-Source/e808bc18f49c23081b70.worker.js.map",
     "index.html": "/Boekhoud-Source/index.html",
     "static/css/2.11bf360b.chunk.css.map": "/Boekhoud-Source/static/css/2.11bf360b.chunk.css.map",
     "static/css/main.ab073d7e.chunk.css.map": "/Boekhoud-Source/static/css/main.ab073d7e.chunk.css.map",
-    "static/js/2.9e8d4b71.chunk.js.LICENSE.txt": "/Boekhoud-Source/static/js/2.9e8d4b71.chunk.js.LICENSE.txt"
+    "static/js/2.f74a278d.chunk.js.LICENSE.txt": "/Boekhoud-Source/static/js/2.f74a278d.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
     "static/js/runtime-main.4a079392.js",
     "static/css/2.11bf360b.chunk.css",
-    "static/js/2.9e8d4b71.chunk.js",
+    "static/js/2.f74a278d.chunk.js",
     "static/css/main.ab073d7e.chunk.css",
-    "static/js/main.02c20aa9.chunk.js"
+    "static/js/main.ed594fe6.chunk.js"
   ]
 }
