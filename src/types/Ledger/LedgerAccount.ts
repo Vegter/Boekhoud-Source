@@ -2,6 +2,7 @@ import { LedgerScheme } from "./LedgerScheme"
 import { LedgerAccountData } from "../../model"
 import { LEDGER_ACCOUNT } from "../../config"
 import { removeDiacritics } from "../../services/utils"
+import { CreditDebit } from "../Amount"
 
 /**
  * LedgerAccount
@@ -42,6 +43,12 @@ export class LedgerAccount {
      * The highest level accounts (Balance and ProfitLoss) do not have a side
      */
     get side(): string | undefined { return this.data.DC?.toUpperCase() }
+
+    get CreditDebit(): CreditDebit | undefined {
+        if (this.side) {
+            return this.side === "D" ? CreditDebit.Debit : CreditDebit.Credit
+        }
+    }
 
     /**
      * A property of the ledgerAccount to sort ledgerAccounts

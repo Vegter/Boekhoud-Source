@@ -2,6 +2,7 @@ import { LedgerAccount, UNMAPPED_ACCOUNT } from "./LedgerAccount"
 import { Mocked } from "../mocks"
 import { LEDGER_ACCOUNT } from "../../config"
 import { LedgerAccountData } from "../../model"
+import { CreditDebit } from "../Amount"
 
 test("LedgerAccount", () => {
     let mocked = new Mocked()
@@ -63,10 +64,12 @@ test("LedgerAccount", () => {
 
     expect(account.isRevenue).toEqual(false)
     expect(account.isExpense).toEqual(true)
+    expect(account.CreditDebit).toEqual(CreditDebit.Debit)
 
     data.DC = "C"
     expect(account.isRevenue).toEqual(true)
     expect(account.isExpense).toEqual(false)
+    expect(account.CreditDebit).toEqual(CreditDebit.Credit)
 
     expect(account.isUnmapped()).toEqual(false)
 
@@ -110,4 +113,11 @@ test("LedgerAccount", () => {
     account = new LedgerAccount(data)
     expect(account.isAllocatable).toEqual(true)
     expect(account.isEditable).toEqual(true)
+
+    data = {
+        ...data,
+        DC: "",
+    }
+    account = new LedgerAccount(data)
+    expect(account.CreditDebit).not.toBeDefined()
 })
