@@ -154,7 +154,7 @@ export abstract class LedgerScheme {
      * Returns a list of LedgerAccounts in the LedgerScheme that are valid to allocate expenses and revenues
      */
     public static get allocatableAccounts(): LedgerAccount[] {
-        return this.ledgerAccounts.filter(account => account.isAllocatable && !account.isBankAccount())
+        return this.ledgerAccounts.filter(account => account.isEditable)
     }
 
     @memoize()

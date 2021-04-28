@@ -49,6 +49,9 @@ test("LedgerAccount", () => {
     expect(account.matchDescription("anyOther")).toEqual(false)
     expect(account.matchDescription("with e")).toEqual(true)
 
+    expect(account.isAllocatable).toEqual(false)
+    expect(account.isEditable).toEqual(false)
+
     expect(account.reverseCode).toEqual(data.ReferentieOmslagcode)
     data.ReferentieOmslagcode = null
     account = new LedgerAccount(data)
@@ -87,5 +90,24 @@ test("LedgerAccount", () => {
     expect(accountChild.isBankAccount()).toEqual(true)
     expect(accountChild.isBalanceAccount()).toEqual(true)
 
+    expect(accountChild.isEditable).toEqual(false)
+    expect(accountChild.isAllocatable).toEqual(false)
 
+    data = {
+        ...data,
+        Nivo: 4,
+        Referentiecode: LEDGER_ACCOUNT.BANK_ACCOUNT + "Any"
+    }
+    account = new LedgerAccount(data)
+    expect(account.isAllocatable).toEqual(true)
+    expect(account.isEditable).toEqual(false)
+
+    data = {
+        ...data,
+        Nivo: 4,
+        Referentiecode: "Any"
+    }
+    account = new LedgerAccount(data)
+    expect(account.isAllocatable).toEqual(true)
+    expect(account.isEditable).toEqual(true)
 })

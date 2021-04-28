@@ -171,12 +171,11 @@ function MemorialPage() {
                             updateData()
                         }
 
-                        if (leg.account.isAllocatable) {
+                        if (leg.account.isEditable) {
                             return (
                                 <Tr key={i}>
                                     <Td>
                                         <RGSAccountSelector ledgerAccount={leg.account}
-                                                            disabled={!leg.account.isAllocatable}
                                                             accountOptions={LedgerScheme.allocatableAccounts}
                                                             onChange={onLedgerAccount}/>
                                     </Td>

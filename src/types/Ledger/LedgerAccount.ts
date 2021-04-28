@@ -90,8 +90,19 @@ export class LedgerAccount {
 
     /**
      * Tells whether the account can be used to allocate transactions
+     *
+     * Transactions are allocated to RGS level 4 accounts
+     * Initially transactions are allocated to the general unmapped ledgerAccount
      */
-    get isAllocatable(): boolean { return [4].includes(this.level) || this.code === UNMAPPED_ACCOUNT.code}
+    get isAllocatable(): boolean { return this.level === 4 || this.code === UNMAPPED_ACCOUNT.code}
+
+    /**
+     * Tells whether the account is "changeable"
+     *
+     * A transaction that is allocated to a editable account
+     * can be allocated to another account
+     */
+    get isEditable(): boolean { return this.isAllocatable && !this.isBankAccount() }
 
     /**
      * Tells whether the account is a child of the given ledgerAccount
