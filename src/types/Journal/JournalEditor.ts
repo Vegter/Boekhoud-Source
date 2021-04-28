@@ -8,6 +8,33 @@ import { DateString } from "../DateString"
 import { Accounting } from "../Accounting"
 import { EntryLegData, JournalEntryData } from "../../model"
 
+export const EditorTemplates = {
+    'Lonen': {
+        accounts: [
+            "BSchSalNet",
+            "BSchSalOna",
+            "BSchBepLhe",
+            "BSchSalPsv",
+            "BSchOvsStp",
+            "BSchOvsStp",
+            "BSchSalTvg",
+            "WPerLesLon",
+            "WPerSolPsv",
+            "WPerLesVag",
+            "WPerPenPen",
+            "WBedWkrWkg",
+            "WBedAdlBet",
+        ],
+        rules: [
+            "WPerLesLon = BSchSalNet + BSchBepLhe + BSchOvsStp",
+            "WPerSolPsv = BSchSalPsv",
+            "WPerLesVag = BSchSalTvg",
+            "WPerPenPen = BSchOvsStp",
+            "WBedWkrWkg = BSchSalOna",
+        ]
+    }
+}
+
 class LegEditor {
     static readonly MANUAL_LEG = -1     // Manually added leg, not bound to a journalEntry leg
 
@@ -18,7 +45,7 @@ class LegEditor {
     credit: string
     creditValue: number
     
-    constructor() {
+    constructor(private journalEditor: JournalEditor) {
         this.id = LegEditor.MANUAL_LEG
         this.account = LedgerScheme.unmapped
         this.debit = "0"
@@ -30,8 +57,8 @@ class LegEditor {
     /**
      * Construct a legEditor from an entryLeg
      */
-    static fromEntryLeg(leg: EntryLeg, id: number) {
-        const legEditor = new LegEditor()
+    static fromEntryLeg(leg: EntryLeg, id: number, journalEditor: JournalEditor) {
+        const legEditor = new LegEditor(journalEditor)
         const amount = leg.amount
         const debitValue = amount.isDebit ? -amount.value : 0
         const creditValue = amount.isCredit ? amount.value : 0
@@ -110,6 +137,7 @@ class LegEditor {
             this.credit = ""
             this.creditValue = 0
         }
+        this.journalEditor.onLegAmount(this)
     }
 }
 
@@ -118,6 +146,7 @@ export class JournalEditor {
     private _date: Date
     private _period: Period
     private _legs: LegEditor[]
+    private rules: string[] = []
 
     constructor() {
         this._reason = ""
@@ -131,14 +160,29 @@ export class JournalEditor {
     /**
      * Creates a new editor for the given journalEntry
      */
-    static fromJournalEntry(journalEntry: JournalEntry) {
+    static fromJournalEntry(journalEntry: JournalEntry): JournalEditor {
         const journalEditor = new JournalEditor()
         journalEditor._reason = journalEntry.reason
         journalEditor._date = journalEntry.date.Date
         journalEditor._period = new Period(journalEntry.period.data)
         journalEditor._legs = journalEntry.legs.map((leg, i) =>
-            LegEditor.fromEntryLeg(leg, i))
+            LegEditor.fromEntryLeg(leg, i, journalEditor))
         return journalEditor
+    }
+
+    static fromTemplate(id: string): JournalEditor {
+        const template = EditorTemplates[id as keyof typeof EditorTemplates]
+        const editor = new JournalEditor()
+        if (template) {
+            editor.rules = template.rules
+            editor._legs = template.accounts.map(account => {
+                const legEditor = new LegEditor(editor)
+                legEditor.account = LedgerScheme.getAccount(account)
+                legEditor.updateAmount(legEditor.account.CreditDebit ?? CreditDebit.Debit, "0")
+                return legEditor
+            })
+        }
+        return editor
     }
 
     /**
@@ -153,6 +197,29 @@ export class JournalEditor {
         return journalEditor
     }
 
+    /**
+     * Apply any rules that are affected by the change in the leg amount value
+     */
+    onLegAmount(legEditor: LegEditor) {
+        this.rules
+            .map(rule => rule.split("="))
+            .filter(([, rhs]) => rhs.includes(legEditor.account.code))  // Evaluate RHS's that have changed
+            .forEach(([lhs, rhs]) => {
+                this.legs.forEach(leg => {
+                    // Substitute account by its value
+                    rhs = rhs.replace(leg.account.code, leg.amount.value.toString())
+                })
+                this.legs.filter(leg => leg.account.CreditDebit && leg.account.code === lhs.trim())
+                    // Select legs that match the LHS of the rule
+                    .forEach(leg => {
+                        try {
+                            leg.updateAmount(leg.account.CreditDebit!, eval(rhs))
+                            leg.finalizeAmount()
+                        } catch {}
+                    })
+            })
+    }
+
     get reason() { return this._reason }
     set reason(reason: string) { this._reason = reason }
 
@@ -163,8 +230,14 @@ export class JournalEditor {
     }
 
     get legs() { return this._legs }
+    get nonZeroLegs() { return this._legs.filter(leg => !leg.amount.isZero())}
     addLeg() {
-        this._legs.push(new LegEditor())
+        const leg = new LegEditor(this)
+        const { debit, credit } = this.totals()
+        const amount = Amount.fromAmountCurrency(credit - debit).reversed()  // To get to debit === credit
+        leg.updateAmount(amount.creditDebit, amount.isZero() ? "" : Math.abs(amount.value).toString())
+        leg.finalizeAmount()
+        this._legs.push(leg)
     }
 
     /**
@@ -178,7 +251,7 @@ export class JournalEditor {
      * Returns the total debit anc credit amounts for the legs
      */
     totals() {
-        return this.legs.reduce((sum, leg) => {
+        return this.nonZeroLegs.reduce((sum, leg) => {
             let { debit, credit } = sum
             debit += leg.debitValue
             credit += leg.creditValue
@@ -244,9 +317,11 @@ export class JournalEditor {
             }
         }
 
-        this.legs.filter(leg => leg.id === LegEditor.MANUAL_LEG).forEach(leg => {
-            data.entryLegsData.push(leg.entryLegData)
-        })
+        // Only add non-Zero legs
+        this.nonZeroLegs.filter(leg => leg.id === LegEditor.MANUAL_LEG)
+            .forEach(leg => {
+                data.entryLegsData.push(leg.entryLegData)
+            })
         return data
     }
 

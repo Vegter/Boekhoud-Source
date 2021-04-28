@@ -16,13 +16,14 @@ import DateSelector from "../components/Selectors/DateSelector"
 import FormatAmount from "../components/Utils/FormatAmount"
 import RGSAccountSelector from "../components/Editors/RGSAccountSelector"
 import AmountEditor from "../components/Editors/AmountEditor"
+import ItemSelect from "../components/Selectors/ItemSelect"
 import { Table, Thead, Tr, Th, Tbody, Td } from "../components/ResponsiveTable"
 
 import { LedgerAccount } from "../types/Ledger/LedgerAccount"
 import { LedgerScheme } from "../types/Ledger/LedgerScheme"
 import { Accounting } from "../types/Accounting"
 import { Amount, CreditDebit } from "../types/Amount"
-import { JournalEditor } from "../types/Journal/JournalEditor"
+import { EditorTemplates, JournalEditor } from "../types/Journal/JournalEditor"
 import { JournalEntry } from "../types/Journal/JournalEntry"
 
 const useStyles = makeStyles(() =>
@@ -46,6 +47,9 @@ const useStyles = makeStyles(() =>
         },
         totals: {
             fontWeight: "bold"
+        },
+        templateSelector: {
+            marginBottom: 25
         }
     }),
 );
@@ -111,9 +115,23 @@ function MemorialPage() {
         }
     }
 
+    const templates = EditorTemplates
+    const template = ""
+
+    const onTemplate = (id: string | null) => {
+        if (id) {
+            setData(JournalEditor.fromTemplate(id))
+        }
+    }
+
     return (
         <div>
             <PageHeader title={journalEntry ? Routes.Edit : Routes.Memorial} periodFilter={false} withName={false}/>
+
+            {!journalEntry && <div className={classes.templateSelector}>
+                <ItemSelect title={"Template"} width={150}
+                            items={Object.keys(templates)} item={template} onItem={onTemplate} />
+            </div>}
 
             <Paper elevation={3} className={classes.paper}>
 
