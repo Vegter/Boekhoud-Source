@@ -1,16 +1,16 @@
 {
   "files": {
     "main.css": "/Boekhoud-Source/static/css/main.ab073d7e.chunk.css",
-    "main.js": "/Boekhoud-Source/static/js/main.b9f8fe22.chunk.js",
-    "main.js.map": "/Boekhoud-Source/static/js/main.b9f8fe22.chunk.js.map",
+    "main.js": "/Boekhoud-Source/static/js/main.02c20aa9.chunk.js",
+    "main.js.map": "/Boekhoud-Source/static/js/main.02c20aa9.chunk.js.map",
     "runtime-main.js": "/Boekhoud-Source/static/js/runtime-main.4a079392.js",
     "runtime-main.js.map": "/Boekhoud-Source/static/js/runtime-main.4a079392.js.map",
     "static/css/2.11bf360b.chunk.css": "/Boekhoud-Source/static/css/2.11bf360b.chunk.css",
     "static/js/2.9e8d4b71.chunk.js": "/Boekhoud-Source/static/js/2.9e8d4b71.chunk.js",
     "static/js/2.9e8d4b71.chunk.js.map": "/Boekhoud-Source/static/js/2.9e8d4b71.chunk.js.map",
-    "90e01dba2751abb63844.worker.js": "/Boekhoud-Source/90e01dba2751abb63844.worker.js",
-    "90e01dba2751abb63844.worker.js.LICENSE.txt": "/Boekhoud-Source/90e01dba2751abb63844.worker.js.LICENSE.txt",
-    "90e01dba2751abb63844.worker.js.map": "/Boekhoud-Source/90e01dba2751abb63844.worker.js.map",
+    "bb4f90f54f2b6d773871.worker.js": "/Boekhoud-Source/bb4f90f54f2b6d773871.worker.js",
+    "bb4f90f54f2b6d773871.worker.js.LICENSE.txt": "/Boekhoud-Source/bb4f90f54f2b6d773871.worker.js.LICENSE.txt",
+    "bb4f90f54f2b6d773871.worker.js.map": "/Boekhoud-Source/bb4f90f54f2b6d773871.worker.js.map",
     "index.html": "/Boekhoud-Source/index.html",
     "static/css/2.11bf360b.chunk.css.map": "/Boekhoud-Source/static/css/2.11bf360b.chunk.css.map",
     "static/css/main.ab073d7e.chunk.css.map": "/Boekhoud-Source/static/css/main.ab073d7e.chunk.css.map",
@@ -21,6 +21,6 @@
     "static/css/2.11bf360b.chunk.css",
     "static/js/2.9e8d4b71.chunk.js",
     "static/css/main.ab073d7e.chunk.css",
-    "static/js/main.b9f8fe22.chunk.js"
+    "static/js/main.02c20aa9.chunk.js"
   ]
 }
