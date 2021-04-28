@@ -32,6 +32,17 @@ export const EditorTemplates = {
             "WPerPenPen = BSchOvsStp",
             "WBedWkrWkg = BSchSalOna",
         ]
+    },
+    'Lonen kort': {
+        accounts: [
+            "BSchSalNet",
+            "BSchBepLhe",
+            "WPerLesLon",
+            "WBedAdlBet",
+        ],
+        rules: [
+            "WPerLesLon = BSchSalNet + BSchBepLhe",
+        ]
     }
 }
 
@@ -213,7 +224,9 @@ export class JournalEditor {
                     // Select legs that match the LHS of the rule
                     .forEach(leg => {
                         try {
-                            leg.updateAmount(leg.account.CreditDebit!, eval(rhs))
+                            // eslint-disable-next-line no-new-func
+                            const evalRhs = new Function(`return (${rhs})`)()
+                            leg.updateAmount(leg.account.CreditDebit!, evalRhs)
                             leg.finalizeAmount()
                         } catch {}
                     })

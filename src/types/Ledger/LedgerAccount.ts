@@ -48,6 +48,7 @@ export class LedgerAccount {
         if (this.side) {
             return this.side === "D" ? CreditDebit.Debit : CreditDebit.Credit
         }
+        return undefined
     }
 
     /**
