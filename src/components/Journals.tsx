@@ -42,7 +42,7 @@ function Journals(props: JournalProps) {
     const classes = useStyles()
 
     let entries: JournalEntry[] = journal.journalEntries
-    entries = sortedArray(entries, (e) => [e.period.string, e.date.string].join("."))
+    entries = sortedArray(entries, (e) => [e.period.string, e.date.string].join("."), false)
 
     const filteredEntries = entries.slice(0, viewPort)
     const hasMore = viewPort < entries.length
