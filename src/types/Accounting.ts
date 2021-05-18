@@ -82,7 +82,7 @@ export class Accounting {
             const { bankAccount, statementEntries } = this.liquidAssets.addBankImportStatement(statementData)
             this.allocations.addStatementEntries(bankAccount, statementEntries)
         })
-        Accounting._CurrentState.ledgerAllocationsData = this.allocations.sorted().data
+        Accounting._CurrentState.ledgerAllocationsData = this.allocations.data
     }
 
     deleteJournalEntry(journalEntryData: JournalEntryData) {

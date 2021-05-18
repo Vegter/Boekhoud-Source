@@ -69,7 +69,7 @@ export class CAMT053ImportStatement extends BankImportStatement {
         const openingBalance = statement.Bal.find((bal: TBal) => bal.Tp.CdOrPrtry.Cd === "OPBD")
         const closingBalance = statement.Bal.find((bal: TBal) => bal.Tp.CdOrPrtry.Cd === "CLBD")
         return {
-            id: statement.ElctrncSeqNb,
+            id: statement.Id,
             openingBalanceData: CAMT053ImportStatement.getAccountBalance(openingBalance),
             closingBalanceData: CAMT053ImportStatement.getAccountBalance(closingBalance),
         }
@@ -80,7 +80,7 @@ export class CAMT053ImportStatement extends BankImportStatement {
      */
     private static getStatementEntry(statement: BkToCstmrStmt, ntry: TNtry, i: number): StatementEntryData {
         return {
-            id: ntry.NtryRef || `${statement.ElctrncSeqNb}.${i}`,
+            id: ntry.NtryRef || `${statement.Id}.${i}`,
             amountData: {
                 amount: ntry.Amt,
                 currency: ntry.Ccy,
@@ -90,7 +90,7 @@ export class CAMT053ImportStatement extends BankImportStatement {
             valueDate: ntry.ValDt,
             relatedParties: ntry.Nm,
             remittanceInformation: ntry.RmtInf,
-            accountStatementRef: statement.ElctrncSeqNb
+            accountStatementRef: statement.Id
         }
     }
 }

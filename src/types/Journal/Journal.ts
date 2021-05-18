@@ -13,9 +13,9 @@ import { EntryLeg } from "./EntryLeg"
 export class Journal extends DataMapping<JournalEntryMapData, JournalEntryData> {
 
     /**
-     * Return a list of all JournalEntries in the Journal
+     * Return a list of all JournalEntries in the Journal, newest on top
      */
-    get journalEntries(): JournalEntry[] { return this.getItems(JournalEntry) }
+    get journalEntries(): JournalEntry[] { return this.getItems(JournalEntry).reverse() }
 
     /**
      * Get the JournalEntry with the given id

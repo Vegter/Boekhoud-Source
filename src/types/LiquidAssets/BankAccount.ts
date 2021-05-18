@@ -90,6 +90,7 @@ export class BankAccount {
         let result: Partial<AccountBalanceData> = {}
         const statements = Object.values(this.data.accountStatementMapData)
         statements.forEach(statement => {
+            // Take first openingBalance for the specific date
             if (!result.date || statement.openingBalanceData.date < result.date) {
                 result.date = statement.openingBalanceData.date
                 result.amountData = statement.openingBalanceData.amountData
@@ -105,7 +106,8 @@ export class BankAccount {
         let result: Partial<AccountBalanceData> = {}
         const statements = Object.values(this.data.accountStatementMapData)
         statements.forEach(statement => {
-            if (!result.date || statement.closingBalanceData.date > result.date) {
+            // Take last closingBalance for the specific date
+            if (!result.date || statement.closingBalanceData.date >= result.date) {
                 result.date = statement.closingBalanceData.date
                 result.amountData = statement.closingBalanceData.amountData
             }

@@ -87,13 +87,13 @@ class StmtNtry {
 }
 
 export class BkToCstmrStmt {
-    ElctrncSeqNb: string
+    Id: string
     Acct: StmtAcct
     Bal: StmtBal[]
     Ntry: StmtNtry[]
 
     constructor(statement: any) {
-        this.ElctrncSeqNb = statement["ElctrncSeqNb"]
+        this.Id = statement["Id"]
         this.Acct = {
             Id: {
                 IBAN: statement["Acct"]["Id"]["IBAN"],
