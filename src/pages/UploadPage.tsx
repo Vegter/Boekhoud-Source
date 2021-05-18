@@ -6,23 +6,27 @@ import { BankImportStatement } from "../types/BankImport/BankImportStatement"
 import { Routes } from "../routes/routes"
 import PageHeader from "./PageHeader"
 import { resetState, restoreStateFromJSON } from "../services/stateIO"
-import { useHistory } from "react-router-dom"
+import { useHistory, useLocation } from "react-router-dom"
 import { LedgerScheme } from "../types/Ledger/LedgerScheme"
 import { Accounting } from "../types/Accounting"
-import { BankImports } from "../components/FileLoader/BankImports"
-import { VersionImports } from "../components/FileLoader/VersionImports"
+import { BankImports } from "../components/Loader/BankImports"
+import { BizcuitImport } from "../components/Loader/BizcuitImport"
+import { VersionImports } from "../components/Loader/VersionImports"
 import {
     isProgressError,
     LoadingProgress,
     PASSWORD_ERROR,
     UPLOAD_CANCELLED,
     UPLOAD_ERROR_MSG
-} from "../components/FileLoader/UploadLoadingProgress"
-import ImportDialog from "../components/FileLoader/ImportDialog"
+} from "../components/Loader/UploadLoadingProgress"
+import ImportDialog from "../components/Loader/ImportDialog"
 import { decryptJSON, isJSONEncrypted } from "../services/crypto"
 import { resetAge } from "../app/AgeSlice"
 
 function UploadPage() {
+    const search = useLocation().search
+    const bizcuit = new URLSearchParams(search).get('bizcuit')
+
     const [ progress, setProgress ] = useState("")
     const [ loading, setLoading ] = useState<boolean>(false)
     const [ entriesRead, setEntriesRead ] = useState(0)
@@ -120,6 +124,8 @@ function UploadPage() {
         }
     }
 
+    const bizcuitImport = bizcuit ? <BizcuitImport onLoad={onLoad}/> : null
+
     return (
         <div>
             <PageHeader title={Routes.Upload} periodFilter={false} withName={false}/>
@@ -129,6 +135,7 @@ function UploadPage() {
             {!progress &&
                 <>
                     <BankImports onLoad={onLoad}/>
+                    {bizcuitImport}
                     <VersionImports onLoad={onRead}/>
                 </>}
         </div>

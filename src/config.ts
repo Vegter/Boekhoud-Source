@@ -32,6 +32,7 @@ export const APP = {
 }
 
 export const RGS_API_BASE_URL = "http://localhost:8000"
+export const BIZCUIT_LINK_API = "https://bclink.herokuapp.com"
 
 const LOCAL_BASE_URL = `/Boekhoud-Source`
 

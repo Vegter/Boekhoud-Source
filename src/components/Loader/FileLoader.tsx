@@ -54,6 +54,7 @@ function FileLoader(props: FileLoaderProps) {
 
     return (
         <Button variant={"contained"}
+                style={{width: 290}}
                 aria-label={props.title}
                 onClick={onClick}
                 color={"primary"}>

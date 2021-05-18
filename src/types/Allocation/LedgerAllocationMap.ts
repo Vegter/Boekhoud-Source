@@ -35,11 +35,13 @@ export class LedgerAllocationMap {
     }
 
     /**
-     * Get all LedgerAllocations, sorted descending
+     * Get all LedgerAllocations, newest on top
      */
     get allocations(): LedgerAllocation[] {
-        const allocations = Object.values(this.data).map(data => new LedgerAllocation(data))
-        return sortedArray(allocations, a => a.sortKey, false)
+        // Newest on top
+        const result = Object.keys(this.data).map(key => new LedgerAllocation(this.data[key])).reverse()
+        // Sorted on date
+        return sortedArray(result, (a) => a.statementEntry.valueDate.string, false)
     }
 
     /**
