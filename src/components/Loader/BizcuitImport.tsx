@@ -108,11 +108,13 @@ export function BizcuitImport(props: { onLoad: (statements: BankImportStatement[
 
     return <>
         <h3>
-            <Grid container direction={"row"} justify={"center"} alignItems={"center"} spacing={1}>
+            <Grid container direction={"row"} justify={"center"} alignItems={"center"} spacing={1}
+                  onClick={() => setOpen(!open)}
+                  style={{cursor: "pointer"}}>
                 <Grid item><img src={logo} alt={"Bizcuit logo"} width={20}/></Grid>
                 <Grid item>Bizcuit</Grid>
                 <Grid item>
-                    <IconButton aria-label={"Activate Bizcuit import"} onClick={() => setOpen(!open)}>
+                    <IconButton aria-label={"Activate Bizcuit import"} color={"primary"} size={"small"}>
                         {!open && <KeyboardArrowDown/>}
                         {open && <KeyboardArrowUp/>}
                     </IconButton>
