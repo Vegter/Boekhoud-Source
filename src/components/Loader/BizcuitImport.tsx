@@ -3,7 +3,8 @@ import React, { useEffect, useState } from "react"
 import { parseString } from "xml2js"
 
 import { Button, CircularProgress, Grid, TextField } from "@material-ui/core"
-import { Check, Dialpad, Error } from "@material-ui/icons"
+import IconButton from "@material-ui/core/IconButton"
+import { Check, Dialpad, Error, KeyboardArrowDown, KeyboardArrowUp } from "@material-ui/icons"
 
 import { BIZCUIT_LINK_API } from "../../config"
 import logo from "./BizcuitLogo.png"
@@ -17,26 +18,56 @@ export function BizcuitImport(props: { onLoad: (statements: BankImportStatement[
     const [pincode, setPincode] = useState("")
     const [success, setSuccess] = useState<boolean | undefined>(undefined)
     const [loading, setLoading] = useState(false)
+    const [open, setOpen] = useState(false)
+    const [bizcuitRef, setBizcuitRef] = useState("")
 
     const title = "Importeer vanuit Bizcuit"
 
-    const onClick = async() => {
-        try {
-            setPincode("")
-            setSuccess(undefined)
-            const response = await fetch(BIZCUIT_LINK_API + "/bizcuit_auth")
-            const data = await response.json() as {url: string, requestId: string}
-            window.open(data.url, "_blank")
-            setRequestId(data.requestId)
-        } catch (err) {
-            console.log(err)
-        }
+    const onClick = () => {
+        window.open(bizcuitRef, "")
+        setPincode("")
+        setSuccess(undefined)
     }
 
     const onPincode = (event: any) => {
         const value = event.target.value || ""
         setPincode(value)
     }
+
+    useEffect(() => {
+        let autoClose:NodeJS.Timeout | null = null
+
+        const cancelAutoClose = () => {
+            if (autoClose) {
+                clearTimeout(autoClose)
+                autoClose = null
+            }
+        }
+
+        const getBizcuitRef = async () => {
+            try {
+                const response = await fetch(BIZCUIT_LINK_API + "/bizcuit_auth")
+                const data = await response.json() as {url: string, requestId: string}
+                setBizcuitRef(data.url)
+                setRequestId(data.requestId)
+                autoClose = setTimeout(() => setOpen(false), 60 * 1000)
+            } catch (err) {
+                console.log(err)
+            }
+        }
+
+        if (open) {
+            getBizcuitRef()
+        } else {
+            setBizcuitRef("")
+            setRequestId("")
+            cancelAutoClose()
+        }
+
+        return () => {
+            cancelAutoClose()
+        }
+    }, [open])
 
     useEffect(() => {
         const getTransactions = async() => {
@@ -80,18 +111,26 @@ export function BizcuitImport(props: { onLoad: (statements: BankImportStatement[
             <Grid container direction={"row"} justify={"center"} alignItems={"center"} spacing={1}>
                 <Grid item><img src={logo} alt={"Bizcuit logo"} width={20}/></Grid>
                 <Grid item>Bizcuit</Grid>
+                <Grid item>
+                    <IconButton aria-label={"Activate Bizcuit import"} onClick={() => setOpen(!open)}>
+                        {!open && <KeyboardArrowDown/>}
+                        {open && <KeyboardArrowUp/>}
+                    </IconButton>
+                </Grid>
             </Grid>
         </h3>
+        {open && <>
         <p>
             Via onderstaande button kan een import worden gestart vanuit Bizcuit
         </p>
         <p>
             <Button variant={"contained"}
                     style={{width: 290}}
+                    disabled={!bizcuitRef}
                     aria-label={title}
                     onClick={onClick}
                     color={"primary"}>
-                {title}
+                {bizcuitRef ? title : "Initialiseer koppeling..."}
             </Button>
         </p>
         <p>
@@ -112,5 +151,6 @@ export function BizcuitImport(props: { onLoad: (statements: BankImportStatement[
             {loading && <Grid item><CircularProgress size={24}/></Grid>}
             {!loading && <Grid item>{success === true ? <Check/> : success === false ? <Error/> : <Dialpad/>}</Grid>}
         </Grid>
+        </>}
     </>
 }
