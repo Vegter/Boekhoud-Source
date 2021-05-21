@@ -25,12 +25,12 @@ import { resetAge } from "../app/AgeSlice"
 
 function UploadPage() {
     const search = useLocation().search
-    const bizcuit = new URLSearchParams(search).get('bizcuit')
 
     const [ progress, setProgress ] = useState("")
     const [ loading, setLoading ] = useState<boolean>(false)
     const [ entriesRead, setEntriesRead ] = useState(0)
     const [ JSONResult, setJSONResult ] = useState("")
+    const [ showBizcuit, setShowBizcuit ] = useState(Boolean(new URLSearchParams(search).get('bizcuit')))
 
     const dispatch = useDispatch()
     const history = useHistory();
@@ -124,11 +124,17 @@ function UploadPage() {
         }
     }
 
-    const bizcuitImport = bizcuit ? <BizcuitImport onLoad={onLoad}/> : null
+    const toggleBizcuit = () => {
+        setShowBizcuit(!showBizcuit)
+    }
+
+    const bizcuitImport = showBizcuit ? <BizcuitImport onLoad={onLoad}/> : null
 
     return (
         <div>
-            <PageHeader title={Routes.Upload} periodFilter={false} withName={false}/>
+            <div onClick={toggleBizcuit}>
+                <PageHeader title={Routes.Upload} periodFilter={false} withName={false}/>
+            </div>
             {JSONResult && <ImportDialog open={true} onClose={onCloseImportDialog}/>}
             {progress &&
                 <LoadingProgress progress={progress} loading={loading} entriesRead={entriesRead} onClose={onClose}/>}
