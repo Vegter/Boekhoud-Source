@@ -132,7 +132,10 @@ export function BizcuitImport(props: { onLoad: (statements: BankImportStatement[
                     aria-label={title}
                     onClick={onClick}
                     color={"primary"}>
-                {bizcuitRef ? title : "Initialiseer koppeling..."}
+                <Grid container direction={"row"} justify={"center"} alignItems={"center"} spacing={1}>
+                    <Grid item>{bizcuitRef ? title : "Initialiseer koppeling"}</Grid>
+                    {!bizcuitRef && <Grid item><CircularProgress size={15}/></Grid>}
+                </Grid>
             </Button>
         </p>
         <p>
