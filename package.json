@@ -7,7 +7,7 @@
     "camt": "^1.0.1",
     "chart.js": "^2.9.4",
     "comlink-loader": "^2.0.0",
-    "crypto-js": "^4.0.0",
+    "crypto-js": "^4.2.0",
     "date-fns": "^2.19.0",
     "dateformat": "^4.5.1",
     "decimal.js-light": "^2.5.1",
