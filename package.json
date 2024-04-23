@@ -88,7 +88,7 @@
     "@types/react-router-dom": "^5.1.6",
     "@types/react-select": "^3.1.2",
     "@types/xml2js": "^0.4.7",
-    "gh-pages": "^3.1.0",
+    "gh-pages": "^5.0.0",
     "jest-fetch-mock": "^3.0.3",
     "jest-mock-console": "^1.0.1",
     "preval.macro": "^5.0.0"
