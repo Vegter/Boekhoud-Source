@@ -12705,6 +12705,7 @@ xml2js@^0.5.0:
 
 "xml2js@git+https://github.com/peerlibrary/node-xml2js.git#peerlibrary":
   version "0.4.16"
+  uid bb7889f02a774f347b184f3f97e8b7d8cde15e7a
   resolved "git+https://github.com/peerlibrary/node-xml2js.git#bb7889f02a774f347b184f3f97e8b7d8cde15e7a"
   dependencies:
     sax ">=0.6.0"
